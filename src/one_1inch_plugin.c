@@ -11,8 +11,6 @@ static const uint8_t ONE_INCH_SWAP_SELECTOR[SELECTOR_SIZE] = {0x7c, 0x02, 0x52, 
 // unoswap 0x2e95b6c8
 static const uint8_t ONE_INCH_UNOSWAP_SELECTOR[SELECTOR_SIZE] = {0x2e, 0x95, 0xb6, 0xc8};
 
-
-
 // Array of all the different 1inch selectors.
 const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS] = {
     ONE_INCH_SWAP_SELECTOR,
@@ -56,6 +54,12 @@ static void handle_init_contract(void *parameters) {
         }
     }
 
+    if (i == NUM_ONE_INCH_SELECTORS) {
+        // Selector was not found
+        msg->result = ETH_PLUGIN_RESULT_ERROR;
+        return;
+    }
+
     // Set `next_param` to be the first field we expect to parse.
     switch (context->selectorIndex) {
         case SWAP:
@@ -75,13 +79,13 @@ static void handle_init_contract(void *parameters) {
     msg->result = ETH_PLUGIN_RESULT_OK;
 }
 
-static void sent_token_eth(one_inch_parameters_t* context){
+static void sent_token_eth(one_inch_parameters_t *context) {
     context->decimals_sent = WEI_TO_ETHER;
     strncpy(context->ticker_sent, "ETH", sizeof(context->ticker_sent));
     context->tokens_found |= TOKEN_SENT_FOUND;
 }
 
-static void received_token_eth(one_inch_parameters_t* context){
+static void received_token_eth(one_inch_parameters_t *context) {
     context->decimals_received = WEI_TO_ETHER;
     strncpy(context->ticker_received, "ETH", sizeof(context->ticker_received));
     context->tokens_found |= TOKEN_RECEIVED_FOUND;
@@ -90,19 +94,19 @@ static void received_token_eth(one_inch_parameters_t* context){
 static void handle_finalize(void *parameters) {
     ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
-    PRINTF("eth2 plugin finalize\n");
     if (context->valid) {
         msg->numScreens = 1;
         if (context->selectorIndex == SWAP) {
             // An addiitonal screen is required to display the receive and beneficiary field.
             msg->numScreens += 2;
-            if (context->flags & PARTIAL_FILL)
-                msg->numScreens += 1;
+            if (context->flags & PARTIAL_FILL) msg->numScreens += 1;
         }
 
         if (!ADDRESS_IS_ETH(context->contract_address_sent)) {
             // Address is not ETH so we will need to look up the token in the CAL.
-            printf_hex_array("Setting address sent to: ", ADDRESS_LENGTH, context->contract_address_sent);
+            printf_hex_array("Setting address sent to: ",
+                             ADDRESS_LENGTH,
+                             context->contract_address_sent);
             msg->tokenLookup1 = context->contract_address_sent;
         } else {
             sent_token_eth(context);
@@ -110,7 +114,9 @@ static void handle_finalize(void *parameters) {
         }
         if (!ADDRESS_IS_ETH(context->contract_address_received)) {
             // Address is not ETH so we will need to look up the token in the CAL.
-            printf_hex_array("Setting address received to: ", ADDRESS_LENGTH, context->contract_address_received);
+            printf_hex_array("Setting address received to: ",
+                             ADDRESS_LENGTH,
+                             context->contract_address_received);
             msg->tokenLookup2 = context->contract_address_received;
         } else {
             received_token_eth(context);
