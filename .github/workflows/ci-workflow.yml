@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: docker://ledgerhq/ledger-app-builder:2.0.0-1
+      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
 
     steps:
       - name: Clone
@@ -16,12 +16,12 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Build Paraswap plugin
+      - name: Build 1inch plugin
         run: |
           make DEBUG=1
 
-      - name: Upload Paraswap binary
+      - name: Upload 1inch binary
         uses: actions/upload-artifact@v2
         with:
-          name: paraswap-app-debug
+          name: 1inch-app-debug
           path: bin

@@ -1,8 +1,10 @@
 #include "one_inch_plugin.h"
 
-void printf_hex_array(const char* title __attribute__((unused)), int len __attribute__((unused)), const uint8_t* data __attribute__((unused))){
+void printf_hex_array(const char *title __attribute__((unused)),
+                      int len __attribute__((unused)),
+                      const uint8_t *data __attribute__((unused))) {
     PRINTF(title);
-    for(int i = 0; i < len; ++i){
+    for (int i = 0; i < len; ++i) {
         PRINTF("%02x", data[i]);
     };
     PRINTF("\n");
@@ -51,7 +53,7 @@ static void handle_token_sent(ethPluginProvideParameter_t *msg, one_inch_paramet
     memset(context->contract_address_sent, 0, sizeof(context->contract_address_sent));
     memcpy(context->contract_address_sent,
            &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH],
-           sizeof(context->contract_address_sent));
+           ADDRESS_LENGTH);
     printf_hex_array("TOKEN SENT: ", ADDRESS_LENGTH, context->contract_address_sent);
 }
 
@@ -60,12 +62,11 @@ static void handle_token_received(ethPluginProvideParameter_t *msg,
     memset(context->contract_address_received, 0, sizeof(context->contract_address_received));
     memcpy(context->contract_address_received,
            &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH],
-           sizeof(context->contract_address_received));
+           ADDRESS_LENGTH);
     printf_hex_array("TOKEN RECEIVED: ", ADDRESS_LENGTH, context->contract_address_received);
 }
 
-static void handle_flags(ethPluginProvideParameter_t *msg,
-                                  one_inch_parameters_t *context) {
+static void handle_flags(ethPluginProvideParameter_t *msg, one_inch_parameters_t *context) {
     context->flags = msg->parameter[PARAMETER_LENGTH - 1];
 }
 
@@ -133,7 +134,7 @@ static void handle_unoswap(ethPluginProvideParameter_t *msg, one_inch_parameters
 void handle_provide_parameter(void *parameters) {
     ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
-    printf_hex_array("eth2 plugin provide parameter: ", PARAMETER_LENGTH, msg->parameter);
+    printf_hex_array("1inch plugin provide parameter: ", PARAMETER_LENGTH, msg->parameter);
 
     msg->result = ETH_PLUGIN_RESULT_OK;
 
