@@ -1,0 +1,21 @@
+{
+  "name": "ledger-speculos-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "patch-package"
+  },
+  "dependencies": {
+    "@ledgerhq/hw-app-eth": "^6.0.2",
+    "@ledgerhq/hw-transport-node-hid": "^6.0.2",
+    "@ledgerhq/hw-transport-node-speculos": "^6.0.2",
+    "@types/jest": "^26.0.23",
+    "axios": "^0.21.1",
+    "jest": "^27.0.5",
+    "patch-package": "^6.4.7",
+    "ts-jest": "^27.0.3",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  }
+}

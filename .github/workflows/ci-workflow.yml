@@ -1,0 +1,27 @@
+name: Compilation & tests
+
+on: [push, pull_request]
+
+jobs:
+  job_build_debug:
+    name: Build debug
+    runs-on: ubuntu-latest
+
+    container:
+      image: docker://ledgerhq/ledger-app-builder:2.0.0-1
+
+    steps:
+      - name: Clone
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Build Paraswap plugin
+        run: |
+          make DEBUG=1
+
+      - name: Upload Paraswap binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: paraswap-app-debug
+          path: bin
