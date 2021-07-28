@@ -33,7 +33,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
     switch (context->selectorIndex) {
         case SWAP:
         case UNOSWAP:
-            strncpy(msg->title, "Send", msg->titleLength);
+            strlcpy(msg->title, "Send", msg->titleLength);
             break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
@@ -42,7 +42,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
     }
 
     if (!(context->tokens_found & TOKEN_SENT_FOUND)) {
-        strncpy(msg->msg, "Unknown token", msg->msgLength);
+        strlcpy(msg->msg, "Unknown token", msg->msgLength);
         return;
     }
 
@@ -60,7 +60,7 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
     switch (context->selectorIndex) {
         case SWAP:
         case UNOSWAP:
-            strncpy(msg->title, "Receive Min", msg->titleLength);
+            strlcpy(msg->title, "Receive Min", msg->titleLength);
             break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
@@ -69,7 +69,7 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
     }
 
     if (!(context->tokens_found & TOKEN_RECEIVED_FOUND)) {
-        strncpy(msg->msg, "Unknown token", msg->msgLength);
+        strlcpy(msg->msg, "Unknown token", msg->msgLength);
         return;
     }
 
@@ -84,7 +84,7 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
 
 // Set UI for "Beneficiary" screen.
 static void set_beneficiary_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
-    strncpy(msg->title, "Beneficiary", msg->titleLength);
+    strlcpy(msg->title, "Beneficiary", msg->titleLength);
 
     msg->msg[0] = '0';
     msg->msg[1] = 'x';
@@ -100,8 +100,8 @@ static void set_beneficiary_ui(ethQueryContractUI_t *msg, one_inch_parameters_t 
 // Set UI for "Partial fill" screen.
 static void set_partial_fill_ui(ethQueryContractUI_t *msg,
                                 one_inch_parameters_t *context __attribute__((unused))) {
-    strncpy(msg->title, "Partial fill", msg->titleLength);
-    strncpy(msg->msg, "Enabled", msg->msgLength);
+    strlcpy(msg->title, "Partial fill", msg->titleLength);
+    strlcpy(msg->msg, "Enabled", msg->msgLength);
 }
 
 // Helper function that returns the enum corresponding to the screen that should be displayed.
