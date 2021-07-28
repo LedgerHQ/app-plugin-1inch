@@ -41,7 +41,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
             return;
     }
 
-    if (!(context->tokens_found & TOKEN_SENT_FOUND)){
+    if (!(context->tokens_found & TOKEN_SENT_FOUND)) {
         strncpy(msg->msg, "Unknown token", msg->msgLength);
         return;
     }
@@ -68,7 +68,7 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
             return;
     }
 
-    if (!(context->tokens_found & TOKEN_RECEIVED_FOUND)){
+    if (!(context->tokens_found & TOKEN_RECEIVED_FOUND)) {
         strncpy(msg->msg, "Unknown token", msg->msgLength);
         return;
     }
@@ -99,7 +99,7 @@ static void set_beneficiary_ui(ethQueryContractUI_t *msg, one_inch_parameters_t 
 
 // Set UI for "Partial fill" screen.
 static void set_partial_fill_ui(ethQueryContractUI_t *msg,
-                           one_inch_parameters_t *context __attribute__((unused))) {
+                                one_inch_parameters_t *context __attribute__((unused))) {
     strncpy(msg->title, "Partial fill", msg->titleLength);
     strncpy(msg->msg, "Enabled", msg->msgLength);
 }

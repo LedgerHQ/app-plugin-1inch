@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef SPECULOS
-void debug_write( char *buf);
+void debug_write(char *buf);
 #define DEBUG(_s) debug_write(_s)
 #else
 // If SPECULOS is set, uses QEMU's semi-hosting feature to write a string on the terminal.
@@ -9,4 +9,4 @@ void debug_write( char *buf);
 #define DEBUG(_s)
 #endif
 
-int semihosted_printf(const char * format, ...);
+int semihosted_printf(const char *format, ...);

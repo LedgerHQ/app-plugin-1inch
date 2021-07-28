@@ -1,8 +1,10 @@
 #include "one_inch_plugin.h"
 
-void printf_hex_array(const char* title __attribute__((unused)), int len __attribute__((unused)), const uint8_t* data __attribute__((unused))){
+void printf_hex_array(const char *title __attribute__((unused)),
+                      int len __attribute__((unused)),
+                      const uint8_t *data __attribute__((unused))) {
     PRINTF(title);
-    for(int i = 0; i < len; ++i){
+    for (int i = 0; i < len; ++i) {
         PRINTF("%02x", data[i]);
     };
     PRINTF("\n");
@@ -64,8 +66,7 @@ static void handle_token_received(ethPluginProvideParameter_t *msg,
     printf_hex_array("TOKEN RECEIVED: ", ADDRESS_LENGTH, context->contract_address_received);
 }
 
-static void handle_flags(ethPluginProvideParameter_t *msg,
-                                  one_inch_parameters_t *context) {
+static void handle_flags(ethPluginProvideParameter_t *msg, one_inch_parameters_t *context) {
     context->flags = msg->parameter[PARAMETER_LENGTH - 1];
 }
 

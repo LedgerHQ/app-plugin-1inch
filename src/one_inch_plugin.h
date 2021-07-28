@@ -25,11 +25,13 @@ extern const uint8_t ONE_INCH_ETH_ADDRESS[ADDRESS_LENGTH];
 extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
 
 // Returns 1 if corresponding address is the 1inch address for ETH (0xeeeee...).
-#define ADDRESS_IS_ETH(_addr) (!memcmp(_addr, ONE_INCH_ETH_ADDRESS, ADDRESS_LENGTH) || !memcmp(_addr, NULL_ETH_ADDRESS, ADDRESS_LENGTH))
+#define ADDRESS_IS_ETH(_addr)                                \
+    (!memcmp(_addr, ONE_INCH_ETH_ADDRESS, ADDRESS_LENGTH) || \
+     !memcmp(_addr, NULL_ETH_ADDRESS, ADDRESS_LENGTH))
 
 typedef enum {
-   SWAP,
-   UNOSWAP,
+    SWAP,
+    UNOSWAP,
 } oneInchSelector_t;
 
 #define PARTIAL_FILL 1
@@ -51,15 +53,15 @@ typedef enum {
 // #define PATH \
 //     4  // Path of the different asseths that will get swapped during the trade. First and last
 //        // tokens are the ones we care about.
-#define SRC_RECEIVER          5  // Address to which the contract will send the tokens.
-#define DST_RECEIVER          6
-#define FLAGS_PARAM           7
+#define SRC_RECEIVER 5  // Address to which the contract will send the tokens.
+#define DST_RECEIVER 6
+#define FLAGS_PARAM  7
 // #define PATHS_LEN             8
 // #define MEGA_PATHS_OFFSET     9
 // #define MEGA_PATHS_LEN        10
 // #define FIRST_MEGAPATH_OFFSET 11
 // #define FIRST_MEGAPATH        12
-#define NONE                  13  // Placeholder variant to be set when parsing is done but data is still being sent.
+#define NONE 13  // Placeholder variant to be set when parsing is done but data is still being sent.
 
 // Number of decimals used when the token wasn't found in the CAL.
 #define DEFAULT_DECIMAL WEI_TO_ETHER
@@ -96,4 +98,4 @@ typedef struct one_inch_parameters_t {
 void handle_provide_parameter(void *parameters);
 void handle_query_contract_ui(void *parameters);
 void one_inch_plugin_call(int message, void *parameters);
-void printf_hex_array(const char* title, int len, const uint8_t* data);
+void printf_hex_array(const char *title, int len, const uint8_t *data);
