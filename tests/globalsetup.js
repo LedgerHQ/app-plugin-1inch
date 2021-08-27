@@ -1,15 +1,15 @@
-import Zemu from "@zondax/zemu";
+import Zemu from '@zondax/zemu';
 
 const catchExit = async () => {
-  process.on("SIGINT", () => {
-    Zemu.stopAllEmuContainers(function () {
-      process.exit();
+    process.on('SIGINT', () => {
+        Zemu.stopAllEmuContainers(() => {
+            process.exit();
+        });
     });
-  });
 };
 
 module.exports = async () => {
-  await catchExit();
-  await Zemu.checkAndPullImage();
-  await Zemu.stopAllEmuContainers();
+    await catchExit();
+    await Zemu.checkAndPullImage();
+    await Zemu.stopAllEmuContainers();
 };
