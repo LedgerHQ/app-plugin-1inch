@@ -89,12 +89,10 @@ static void set_beneficiary_ui(ethQueryContractUI_t *msg, one_inch_parameters_t 
     msg->msg[0] = '0';
     msg->msg[1] = 'x';
 
-    chain_config_t chainConfig = {0};
-
     getEthAddressStringFromBinary((uint8_t *) context->beneficiary,
-                                  (uint8_t *) msg->msg + 2,
+                                  msg->msg + 2,
                                   msg->pluginSharedRW->sha3,
-                                  &chainConfig);
+                                  0);
 }
 
 // Set UI for "Partial fill" screen.
@@ -105,7 +103,8 @@ static void set_partial_fill_ui(ethQueryContractUI_t *msg,
 }
 
 // Helper function that returns the enum corresponding to the screen that should be displayed.
-static screens_t get_screen(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
+static screens_t get_screen(ethQueryContractUI_t *msg,
+                            one_inch_parameters_t *context __attribute__((unused))) {
     uint8_t index = msg->screenIndex;
 
     if (index == 0) {
