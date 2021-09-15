@@ -17,14 +17,14 @@ const simOptions = {
 
 const Resolve = require('path').resolve;
 
-const APP_PATH = Resolve('elfs/ethereum.elf');
+const APP_PATH_NANOS = Resolve('elfs/ethereum_nanos.elf');
 
-const PLUGIN_LIB = { '1inch': Resolve('elfs/1inch.elf') };
+const PLUGIN_LIB_NANOS = { '1inch': Resolve('elfs/1inch_nanos.elf') };
 
 export function zemu(func) {
     return async () => {
         jest.setTimeout(100000);
-        const sim = new Zemu(APP_PATH, PLUGIN_LIB);
+        const sim = new Zemu(APP_PATH_NANOS, PLUGIN_LIB_NANOS);
         try {
             await sim.start(simOptions);
             const transport = await sim.getTransport();

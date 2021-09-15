@@ -30,4 +30,7 @@ module.exports = {
         '**/?(*.)+(spec|test).[tj]s?(x)',
         '**/?(*.)+(ispec|test).[tj]s?(x)',
     ],
+
+    // Stop immediatly when a test fails
+    bail: true,
 };
