@@ -1,15 +1,5 @@
 #include "one_inch_plugin.h"
 
-void printf_hex_array(const char *title __attribute__((unused)),
-                      int len __attribute__((unused)),
-                      const uint8_t *data __attribute__((unused))) {
-    PRINTF(title);
-    for (int i = 0; i < len; ++i) {
-        PRINTF("%02x", data[i]);
-    };
-    PRINTF("\n");
-}
-
 // Store the amount sent in the form of a string, without any ticker or decimals. These will be
 // added when displaying.
 static void handle_amount_sent(ethPluginProvideParameter_t *msg, one_inch_parameters_t *context) {

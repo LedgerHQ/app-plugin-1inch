@@ -98,4 +98,13 @@ typedef struct one_inch_parameters_t {
 void handle_provide_parameter(void *parameters);
 void handle_query_contract_ui(void *parameters);
 void one_inch_plugin_call(int message, void *parameters);
-void printf_hex_array(const char *title, int len, const uint8_t *data);
+
+static inline void printf_hex_array(const char *title __attribute__((unused)),
+                                    size_t len __attribute__((unused)),
+                                    const uint8_t *data __attribute__((unused))) {
+    PRINTF(title);
+    for (size_t i = 0; i < len; ++i) {
+        PRINTF("%02x", data[i]);
+    };
+    PRINTF("\n");
+}
