@@ -3,32 +3,14 @@
 // Store the amount sent in the form of a string, without any ticker or decimals. These will be
 // added when displaying.
 static void handle_amount_sent(ethPluginProvideParameter_t *msg, one_inch_parameters_t *context) {
-    memset(context->amount_sent, 0, sizeof(context->amount_sent));
-
-    // Convert to string.
-    amountToString(msg->parameter,
-                   PARAMETER_LENGTH,
-                   0,
-                   "",
-                   (char *) context->amount_sent,
-                   sizeof(context->amount_sent));
-    PRINTF("AMOUNT SENT: %s\n", context->amount_sent);
+    memcpy(context->amount_sent, msg->parameter, INT256_LENGTH);
 }
 
 // Store the amount received in the form of a string, without any ticker or decimals. These will be
 // added when displaying.
 static void handle_amount_received(ethPluginProvideParameter_t *msg,
                                    one_inch_parameters_t *context) {
-    memset(context->amount_received, 0, sizeof(context->amount_received));
-
-    // Convert to string.
-    amountToString(msg->parameter,
-                   PARAMETER_LENGTH,
-                   0,   // No decimals
-                   "",  // No ticker
-                   (char *) context->amount_received,
-                   sizeof(context->amount_received));
-    PRINTF("AMOUNT RECEIVED: %s\n", context->amount_received);
+    memcpy(context->amount_received, msg->parameter, PARAMETER_LENGTH);
 }
 
 static void handle_beneficiary(ethPluginProvideParameter_t *msg, one_inch_parameters_t *context) {
