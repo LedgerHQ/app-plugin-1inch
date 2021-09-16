@@ -81,13 +81,13 @@ static void handle_init_contract(void *parameters) {
 
 static void sent_token_eth(one_inch_parameters_t *context) {
     context->decimals_sent = WEI_TO_ETHER;
-    strlcpy(context->ticker_sent, "ETH", sizeof(context->ticker_sent));
+    strcpy(context->ticker_sent, "ETH ");
     context->tokens_found |= TOKEN_SENT_FOUND;
 }
 
 static void received_token_eth(one_inch_parameters_t *context) {
     context->decimals_received = WEI_TO_ETHER;
-    strlcpy(context->ticker_received, "ETH", sizeof(context->ticker_received));
+    strcpy(context->ticker_received, "ETH ");
     context->tokens_found |= TOKEN_RECEIVED_FOUND;
 }
 

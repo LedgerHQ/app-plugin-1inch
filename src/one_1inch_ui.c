@@ -1,33 +1,5 @@
 #include "one_inch_plugin.h"
 
-// Prepend `dest` with `ticker`.
-// Dest must be big enough to hold `ticker` + `dest` + `\0`.
-static void prepend_ticker(char *dest, uint8_t destsize, char *ticker) {
-    if (dest == NULL || ticker == NULL) {
-        THROW(0x6503);
-    }
-    // Add extra 1 for space
-    uint8_t ticker_len = strlen(ticker) + 1;
-    uint8_t dest_len = strlen(dest);
-
-    if (dest_len + ticker_len >= destsize) {
-        THROW(0x6503);
-    }
-
-    // Right shift the string by `ticker_len` bytes.
-    while (dest_len != 0) {
-        dest[dest_len + ticker_len] = dest[dest_len];  // First iteration will copy the \0
-        dest_len--;
-    }
-    // Don't forget to null terminate the string.
-    dest[ticker_len] = dest[0];
-
-    // Copy the ticker to the beginning of the string.
-    memcpy(dest, ticker, ticker_len - 1);
-    // Add space after ticker name
-    dest[ticker_len - 1] = ' ';
-}
-
 // Set UI for the "Send" screen.
 static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
     switch (context->selectorIndex) {
@@ -46,13 +18,14 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
         return;
     }
 
-    adjustDecimals((char *) context->amount_sent,
-                   strnlen((char *) context->amount_sent, sizeof(context->amount_sent)),
+    // Convert to string.
+    amountToString(context->amount_sent,
+                   INT256_LENGTH,
+                   context->decimals_sent,
+                   context->ticker_sent,
                    msg->msg,
-                   msg->msgLength,
-                   context->decimals_sent);
-
-    prepend_ticker(msg->msg, msg->msgLength, context->ticker_sent);
+                   msg->msgLength);
+    PRINTF("AMOUNT SENT: %s\n", msg->msg);
 }
 
 // Set UI for "Receive" screen.
@@ -73,13 +46,14 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
         return;
     }
 
-    adjustDecimals((char *) context->amount_received,
-                   strnlen((char *) context->amount_received, sizeof(context->amount_received)),
+    // Convert to string.
+    amountToString(context->amount_received,
+                   INT256_LENGTH,
+                   context->decimals_received,
+                   context->ticker_received,
                    msg->msg,
-                   msg->msgLength,
-                   context->decimals_received);
-
-    prepend_ticker(msg->msg, msg->msgLength, context->ticker_received);
+                   msg->msgLength);
+    PRINTF("AMOUNT RECEIVED: %s\n", msg->msg);
 }
 
 // Set UI for "Beneficiary" screen.
@@ -89,12 +63,10 @@ static void set_beneficiary_ui(ethQueryContractUI_t *msg, one_inch_parameters_t 
     msg->msg[0] = '0';
     msg->msg[1] = 'x';
 
-    chain_config_t chainConfig = {0};
-
     getEthAddressStringFromBinary((uint8_t *) context->beneficiary,
-                                  (uint8_t *) msg->msg + 2,
+                                  msg->msg + 2,
                                   msg->pluginSharedRW->sha3,
-                                  &chainConfig);
+                                  0);
 }
 
 // Set UI for "Partial fill" screen.
@@ -105,7 +77,8 @@ static void set_partial_fill_ui(ethQueryContractUI_t *msg,
 }
 
 // Helper function that returns the enum corresponding to the screen that should be displayed.
-static screens_t get_screen(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
+static screens_t get_screen(ethQueryContractUI_t *msg,
+                            one_inch_parameters_t *context __attribute__((unused))) {
     uint8_t index = msg->screenIndex;
 
     if (index == 0) {
