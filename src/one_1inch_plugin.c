@@ -79,15 +79,13 @@ static void handle_init_contract(void *parameters) {
     msg->result = ETH_PLUGIN_RESULT_OK;
 }
 
-static void sent_token_eth(one_inch_parameters_t *context) {
+static void sent_network_token(one_inch_parameters_t *context) {
     context->decimals_sent = WEI_TO_ETHER;
-    strcpy(context->ticker_sent, "ETH ");
     context->tokens_found |= TOKEN_SENT_FOUND;
 }
 
-static void received_token_eth(one_inch_parameters_t *context) {
+static void received_network_token(one_inch_parameters_t *context) {
     context->decimals_received = WEI_TO_ETHER;
-    strcpy(context->ticker_received, "ETH ");
     context->tokens_found |= TOKEN_RECEIVED_FOUND;
 }
 
@@ -102,24 +100,24 @@ static void handle_finalize(void *parameters) {
             if (context->flags & PARTIAL_FILL) msg->numScreens += 1;
         }
 
-        if (!ADDRESS_IS_ETH(context->contract_address_sent)) {
-            // Address is not ETH so we will need to look up the token in the CAL.
+        if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
+            // Address is not network token (0xeee...) so we will need to look up the token in the CAL.
             printf_hex_array("Setting address sent to: ",
                              ADDRESS_LENGTH,
                              context->contract_address_sent);
             msg->tokenLookup1 = context->contract_address_sent;
         } else {
-            sent_token_eth(context);
+            sent_network_token(context);
             msg->tokenLookup1 = NULL;
         }
-        if (!ADDRESS_IS_ETH(context->contract_address_received)) {
-            // Address is not ETH so we will need to look up the token in the CAL.
+        if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
+            // Address is not network token (0xeee...) so we will need to look up the token in the CAL.
             printf_hex_array("Setting address received to: ",
                              ADDRESS_LENGTH,
                              context->contract_address_received);
             msg->tokenLookup2 = context->contract_address_received;
         } else {
-            received_token_eth(context);
+            received_network_token(context);
             msg->tokenLookup2 = NULL;
         }
 
@@ -136,8 +134,8 @@ static void handle_provide_token(void *parameters) {
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
     PRINTF("1INCH plugin provide token: 0x%p, 0x%p\n", msg->token1, msg->token2);
 
-    if (ADDRESS_IS_ETH(context->contract_address_sent)) {
-        sent_token_eth(context);
+    if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
+        sent_network_token(context);
     } else if (msg->token1 != NULL) {
         context->decimals_sent = msg->token1->decimals;
         strlcpy(context->ticker_sent, (char *) msg->token1->ticker, sizeof(context->ticker_sent));
@@ -150,8 +148,8 @@ static void handle_provide_token(void *parameters) {
         // msg->additionalScreens++;
     }
 
-    if (ADDRESS_IS_ETH(context->contract_address_received)) {
-        received_token_eth(context);
+    if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
+        received_network_token(context);
     } else if (msg->token2 != NULL) {
         context->decimals_received = msg->token2->decimals;
         strlcpy(context->ticker_received,

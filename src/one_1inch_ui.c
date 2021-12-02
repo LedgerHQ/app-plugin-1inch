@@ -18,6 +18,11 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
         return;
     }
 
+    // set network ticker (ETH, BNB, etc) if needed
+    if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
+        strlcpy(context->ticker_sent, msg->network_ticker, sizeof(context->ticker_sent));
+    }
+
     // Convert to string.
     amountToString(context->amount_sent,
                    INT256_LENGTH,
@@ -44,6 +49,11 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
     if (!(context->tokens_found & TOKEN_RECEIVED_FOUND)) {
         strlcpy(msg->msg, "Unknown token", msg->msgLength);
         return;
+    }
+
+    // set network ticker (ETH, BNB, etc) if needed
+    if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
+        strlcpy(context->ticker_received, msg->network_ticker, sizeof(context->ticker_received));
     }
 
     // Convert to string.
