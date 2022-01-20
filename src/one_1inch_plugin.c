@@ -130,15 +130,15 @@ static void handle_finalize(void *parameters) {
 }
 
 static void handle_provide_token(void *parameters) {
-    ethPluginProvideToken_t *msg = (ethPluginProvideToken_t *) parameters;
+    ethPluginProvideInfo_t *msg = (ethPluginProvideInfo_t *) parameters;
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
-    PRINTF("1INCH plugin provide token: 0x%p, 0x%p\n", msg->token1, msg->token2);
+    PRINTF("1INCH plugin provide token: 0x%p, 0x%p\n", msg->item1, msg->item2);
 
     if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
         sent_network_token(context);
-    } else if (msg->token1 != NULL) {
-        context->decimals_sent = msg->token1->decimals;
-        strlcpy(context->ticker_sent, (char *) msg->token1->ticker, sizeof(context->ticker_sent));
+    } else if (msg->item1 != NULL) {
+        context->decimals_sent = msg->item1->token.decimals;
+        strlcpy(context->ticker_sent, (char *) msg->item1->token.ticker, sizeof(context->ticker_sent));
         context->tokens_found |= TOKEN_SENT_FOUND;
     } else {
         // CAL did not find the token and token is not ETH.
@@ -150,10 +150,10 @@ static void handle_provide_token(void *parameters) {
 
     if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
         received_network_token(context);
-    } else if (msg->token2 != NULL) {
-        context->decimals_received = msg->token2->decimals;
+    } else if (msg->item2 != NULL) {
+        context->decimals_received = msg->item2->token.decimals;
         strlcpy(context->ticker_received,
-                (char *) msg->token2->ticker,
+                (char *) msg->item2->token.ticker,
                 sizeof(context->ticker_received));
         context->tokens_found |= TOKEN_RECEIVED_FOUND;
     } else {
@@ -201,7 +201,7 @@ void one_inch_plugin_call(int message, void *parameters) {
         case ETH_PLUGIN_FINALIZE:
             handle_finalize(parameters);
             break;
-        case ETH_PLUGIN_PROVIDE_TOKEN:
+        case ETH_PLUGIN_PROVIDE_INFO:
             handle_provide_token(parameters);
             break;
         case ETH_PLUGIN_QUERY_CONTRACT_ID:
