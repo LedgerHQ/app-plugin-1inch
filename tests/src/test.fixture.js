@@ -13,6 +13,7 @@ const simOptions = {
     X11: false,
     startDelay: 15000,
     custom: '',
+    startText: 'is ready'
 };
 
 const Resolve = require('path').resolve;
