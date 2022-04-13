@@ -1,0 +1,92 @@
+{
+    "chainId": 137,
+    "contracts": [
+        {
+            "address": "0x1111111254fb6c44bac0bed2854e76f90643097d",
+            "contractName": "AggregationRouterV4",
+            "selectors": {
+                "0x7c025200": {
+                    "erc20OfInterest": [
+                        "tokenA",
+                        "tokenB"
+                    ],
+                    "method": "swap",
+                    "plugin": "1inch"
+                },
+                "0x2e95b6c8": {
+                    "erc20OfInterest": [
+                        "path.0",
+                        "path.-1"
+                    ],
+                    "method": "unoswap",
+                    "plugin": "1inch"
+                },
+                "0xa1251d75": {
+                    "erc20OfInterest": [
+                        "path.0",
+                        "path.-1"
+                    ],
+                    "method": "unoswapWithPermit",
+                    "plugin": "1inch"
+                },
+                "0xe449022e": {
+                    "erc20OfInterest": [
+                        "path.0",
+                        "path.-1"
+                    ],
+                    "method": "uniswapV3Swap",
+                    "plugin": "1inch"
+                },
+                "0x2521b930": {
+                    "erc20OfInterest": [
+                        "path.0",
+                        "path.-1"
+                    ],
+                    "method": "uniswapV3SwapToWithPermit",
+                    "plugin": "1inch"
+                },
+                "0xbc80f1a8": {
+                    "erc20OfInterest": [
+                        "path.0",
+                        "path.-1"
+                    ],
+                    "method": "uniswapV3SwapTo",
+                    "plugin": "1inch"
+                },
+                "0xb0431182": {
+                    "erc20OfInterest": [
+                        "path.0",
+                        "path.-1"
+                    ],
+                    "method": "clipperSwap",
+                    "plugin": "1inch"
+                },
+                "0xd6a92a5d": {
+                    "erc20OfInterest": [
+                        "path.0",
+                        "path.-1"
+                    ],
+                    "method": "clipperSwapToWithPermit",
+                    "plugin": "1inch"
+                },
+                "0xd0a3b665": {
+                    "erc20OfInterest": [
+                        "path.0",
+                        "path.-1"
+                    ],
+                    "method": "fillOrderRFQ",
+                    "plugin": "1inch"
+                },
+                "0x4cc4a27b": {
+                    "erc20OfInterest": [
+                        "path.0",
+                        "path.-1"
+                    ],
+                    "method": "fillOrderRFQToWithPermit",
+                    "plugin": "1inch"
+                }
+            }
+        }
+    ],
+    "name": "1inch"
+}
