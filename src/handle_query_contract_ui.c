@@ -1,5 +1,6 @@
 #include "one_inch_plugin.h"
 
+
 // Set UI for the "Send" screen.
 static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
     switch (context->selectorIndex) {
