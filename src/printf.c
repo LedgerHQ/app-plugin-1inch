@@ -553,7 +553,7 @@ static size_t _etoa(out_fct_type out,
     exp2 = (int) (expval * 3.321928094887362 + 0.5);
     const double z = expval * 2.302585092994046 - exp2 * 0.6931471805599453;
     const double z2 = z * z;
-    conv.U = (uint64_t)(exp2 + 1023) << 52U;
+    conv.U = (uint64_t) (exp2 + 1023) << 52U;
     // compute exp(z) using continued fractions, see
     // https://en.wikipedia.org/wiki/Exponential_function#Continued_fractions_for_ex
     conv.F *= 1 + 2 * z / (2 - z + (z2 / (6 + (z2 / (10 + z2 / 14)))));
@@ -834,10 +834,9 @@ static int _vsnprintf(out_fct_type out,
                                          width,
                                          flags);
                     } else {
-                        const int value = (flags & FLAGS_CHAR)
-                                              ? (char) va_arg(va, int)
-                                              : (flags & FLAGS_SHORT) ? (short int) va_arg(va, int)
-                                                                      : va_arg(va, int);
+                        const int value = (flags & FLAGS_CHAR)    ? (char) va_arg(va, int)
+                                          : (flags & FLAGS_SHORT) ? (short int) va_arg(va, int)
+                                                                  : va_arg(va, int);
                         idx = _ntoa_long(out,
                                          buffer,
                                          idx,
@@ -877,11 +876,9 @@ static int _vsnprintf(out_fct_type out,
                                          flags);
                     } else {
                         const unsigned int value =
-                            (flags & FLAGS_CHAR)
-                                ? (unsigned char) va_arg(va, unsigned int)
-                                : (flags & FLAGS_SHORT)
-                                      ? (unsigned short int) va_arg(va, unsigned int)
-                                      : va_arg(va, unsigned int);
+                            (flags & FLAGS_CHAR)    ? (unsigned char) va_arg(va, unsigned int)
+                            : (flags & FLAGS_SHORT) ? (unsigned short int) va_arg(va, unsigned int)
+                                                    : va_arg(va, unsigned int);
                         idx = _ntoa_long(out,
                                          buffer,
                                          idx,
