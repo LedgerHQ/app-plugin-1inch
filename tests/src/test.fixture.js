@@ -11,7 +11,8 @@ const simOptions = {
     model: 'nanos',
     logging: true,
     X11: false,
-    startDelay: 15000,
+    startDelay: 10000,
+    startText: 'is ready',
     custom: '',
 };
 

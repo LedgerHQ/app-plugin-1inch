@@ -14,7 +14,7 @@
     "@ledgerhq/hw-app-eth": "^6.5.0",
     "@ledgerhq/hw-transport-http": "^6.3.0",
     "@ledgerhq/logs": "^6.2.0",
-    "@zondax/zemu": "0.16.5",
+    "@zondax/zemu": "^0.27.4",
     "core-js": "^3.16.3",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
