@@ -22,8 +22,10 @@ const simOptions = {
 const Resolve = require('path').resolve;
 
 const APP_PATH_NANOS = Resolve('elfs/ethereum_nanos.elf');
+const APP_PATH_NANOX = Resolve('elfs/ethereum_nanox.elf');
 
 const PLUGIN_LIB_NANOS = { '1inch': Resolve('elfs/1inch_nanos.elf') };
+const PLUGIN_LIB_NANOX = { '1inch': Resolve('elfs/1inch_nanox.elf') };
 
 const RANDOM_ADDRESS = "0xaaaabbbbccccddddeeeeffffgggghhhhiiiijjjj";
 
@@ -32,10 +34,12 @@ let genericTx = {
     gasLimit: Number(21000),
     gasPrice: parseUnits("1", "gwei"),
     value: parseEther("1"),
-    chainId: 137,
+    chainId: 1,
     to: RANDOM_ADDRESS,
     data: null,
 };
+
+let config;
 
 const TIMEOUT = 2000000;
 
@@ -82,20 +86,19 @@ function txFromEtherscan(rawTx) {
 function zemu(device, func, testNetwork, signed = false) {
     return async () => {
       jest.setTimeout(TIMEOUT);
-      let eth_path = APP_PATH_NANOS;
-      let plugin = PLUGIN_LIB_NANOS;
+      let eth_path;
+      let plugin;
       let sim_options = simOptions;
-      sim_options.model = "nanos";
   
-    //   if (device === "nanos") {
-    //     eth_path = APP_PATH_NANOS;
-    //     plugin = PLUGIN_LIB_NANOS;
-    //     sim_options.model = "nanos";
-    //   } else {
-    //     eth_path = NANOX_ETH_PATH;
-    //     plugin = NANOX_PLUGIN;
-    //     sim_options.model = "nanox";
-    //   }
+      if (device === "nanos") {
+        eth_path = APP_PATH_NANOS;
+        plugin = PLUGIN_LIB_NANOS;
+        sim_options.model = "nanos";
+      } else {
+        eth_path = APP_PATH_NANOX;
+        plugin = PLUGIN_LIB_NANOX;
+        sim_options.model = "nanox";
+      }
   
       const sim = new Zemu(eth_path, plugin);
   
@@ -105,9 +108,10 @@ function zemu(device, func, testNetwork, signed = false) {
         const eth = new Eth(transport);
   
         if (!signed) {
+          const config = generate_plugin_config(testNetwork);
           eth.setLoadConfig({
-            baseURL: null,
-            extraPlugins: generate_plugin_config(testNetwork),
+            pluginBaseURL: null,
+            extraPlugins: config,
           });
         }
         await func(sim, eth);
@@ -132,9 +136,11 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = "") 
     else
       serializedTx = srlTx;
     
-    // const resolution = await ledgerService.resolveTransaction(serializedTx);
-    let tx = eth.signTransaction("44'/60'/0'/0/0", serializedTx, null);
-    console.log(tx);
+    const resolution = await ledgerService.resolveTransaction(serializedTx, config, {
+      externalPlugins: true,
+      erc20: true,
+    });
+    let tx = eth.signTransaction("44'/60'/0'/0/0", serializedTx, resolution);
 
     await sim.waitUntilScreenIsNot(
       sim.getMainMenuSnapshot(),

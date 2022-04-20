@@ -29,7 +29,7 @@ module.exports = {
         // '**/__tests__/**/*.[jt]s?(x)',
         // '**/?(*.)+(spec|test).[tj]s?(x)',
         // '**/?(*.)+(ispec|test).[tj]s?(x)',
-        '**/swap_known_to_known.test*'
+        '**/V4/unoswap_native.test*',
     ],
 
     // Stop immediatly when a test fails
