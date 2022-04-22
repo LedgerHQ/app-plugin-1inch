@@ -6,6 +6,8 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
     switch (context->selectorIndex) {
         case SWAP:
         case UNOSWAP:
+        case UNISWAP_V3_SWAP:
+            PRINTF("GD: Send Screen\n");
             strlcpy(msg->title, "Send", msg->titleLength);
             break;
         default:
@@ -15,12 +17,14 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
     }
 
     if (!(context->tokens_found & TOKEN_SENT_FOUND)) {
+        PRINTF("GD: Send Screen Unknown token\n");
         strlcpy(msg->msg, "Unknown token", msg->msgLength);
         return;
     }
 
     // set network ticker (ETH, BNB, etc) if needed
     if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
+        PRINTF("GD: Send Screen Network token\n");
         strlcpy(context->ticker_sent, msg->network_ticker, sizeof(context->ticker_sent));
     }
 
@@ -39,6 +43,8 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
     switch (context->selectorIndex) {
         case SWAP:
         case UNOSWAP:
+        case UNISWAP_V3_SWAP:
+            PRINTF("GD: Receive Screen\n");
             strlcpy(msg->title, "Receive Min", msg->titleLength);
             break;
         default:
@@ -48,12 +54,14 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
     }
 
     if (!(context->tokens_found & TOKEN_RECEIVED_FOUND)) {
+            PRINTF("GD: Receive Screen unknown token\n");
         strlcpy(msg->msg, "Unknown token", msg->msgLength);
         return;
     }
 
     // set network ticker (ETH, BNB, etc) if needed
     if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
+            PRINTF("GD: Receive Screen network token\n");
         strlcpy(context->ticker_received, msg->network_ticker, sizeof(context->ticker_received));
     }
 
@@ -108,7 +116,6 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
 void handle_query_contract_ui(void *parameters) {
     ethQueryContractUI_t *msg = (ethQueryContractUI_t *) parameters;
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
-
     memset(msg->title, 0, msg->titleLength);
     memset(msg->msg, 0, msg->msgLength);
     msg->result = ETH_PLUGIN_RESULT_OK;

@@ -9,11 +9,14 @@
 static const uint8_t ONE_INCH_SWAP_SELECTOR[SELECTOR_SIZE] = {0x7c, 0x02, 0x52, 0x00};
 // unoswap 0x2e95b6c8
 static const uint8_t ONE_INCH_UNOSWAP_SELECTOR[SELECTOR_SIZE] = {0x2e, 0x95, 0xb6, 0xc8};
+// uniswapV3Swap 0xe449022e
+static const uint8_t ONE_INCH_UNISWAP_V3_SWAP_SELECTOR[SELECTOR_SIZE] = {0xe4, 0x49, 0x02, 0x2e};
 
 // Array of all the different 1inch selectors.
 const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS] = {
     ONE_INCH_SWAP_SELECTOR,
     ONE_INCH_UNOSWAP_SELECTOR,
+    ONE_INCH_UNISWAP_V3_SWAP_SELECTOR,
 };
 
 // 1inch uses `0xeeeee` as a dummy address to represent ETH.

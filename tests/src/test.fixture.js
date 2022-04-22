@@ -39,7 +39,7 @@ let genericTx = {
     data: null,
 };
 
-let config;
+let config = generate_plugin_config("ethereum");
 
 const TIMEOUT = 2000000;
 
@@ -108,7 +108,6 @@ function zemu(device, func, testNetwork, signed = false) {
         const eth = new Eth(transport);
   
         if (!signed) {
-          const config = generate_plugin_config(testNetwork);
           eth.setLoadConfig({
             pluginBaseURL: null,
             extraPlugins: config,
@@ -135,11 +134,24 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = "") 
       serializedTx = txFromEtherscan(rawTxHex);
     else
       serializedTx = srlTx;
-    
-    const resolution = await ledgerService.resolveTransaction(serializedTx, config, {
+
+    const resolution = await ledgerService.resolveTransaction(serializedTx, {
+      nftExplorerBaseURL: null,
+      pluginBaseURL: null,
+      extraPlugins: config,
+    }, {
+      nft: false,
       externalPlugins: true,
-      erc20: true,
+      erc20: false,
+    })
+    .catch((e) => {
+      console.warn(
+        "an error occurred in resolveTransaction => fallback to blind signing: " +
+          String(e)
+      );
+      return null;
     });
+
     let tx = eth.signTransaction("44'/60'/0'/0/0", serializedTx, resolution);
 
     await sim.waitUntilScreenIsNot(

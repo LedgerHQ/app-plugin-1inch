@@ -103,6 +103,27 @@ static void handle_unoswap(ethPluginProvideParameter_t *msg, one_inch_parameters
     }
 }
 
+
+static void handle_uniswap_v3_swap(ethPluginProvideParameter_t *msg, one_inch_parameters_t *context) {
+    switch (context->next_param) {
+        case AMOUNT_SENT:  // fromAmount
+            handle_amount_sent(msg, context);
+            context->next_param = AMOUNT_RECEIVED;
+            break;
+        case AMOUNT_RECEIVED:  // toAmount
+            handle_amount_received(msg, context);
+            context->next_param = NONE;
+            break;
+        case NONE:
+            break;
+        default:
+            PRINTF("Param not supported\n");
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
+
 void handle_provide_parameter(void *parameters) {
     ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
@@ -134,6 +155,10 @@ void handle_provide_parameter(void *parameters) {
                 break;
             }
 
+            case UNISWAP_V3_SWAP: {
+                handle_uniswap_v3_swap(msg, context);
+                break;
+            }
             default:
                 PRINTF("Selector Index %d not supported\n", context->selectorIndex);
                 msg->result = ETH_PLUGIN_RESULT_ERROR;
