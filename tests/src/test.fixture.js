@@ -39,7 +39,7 @@ let genericTx = {
     data: null,
 };
 
-let config = generate_plugin_config("ethereum");
+let config ;
 
 const TIMEOUT = 2000000;
 
@@ -108,6 +108,7 @@ function zemu(device, func, testNetwork, signed = false) {
         const eth = new Eth(transport);
   
         if (!signed) {
+          config = generate_plugin_config(testNetwork);
           eth.setLoadConfig({
             pluginBaseURL: null,
             extraPlugins: config,
