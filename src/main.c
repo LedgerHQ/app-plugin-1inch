@@ -26,7 +26,6 @@
 
 #include "one_inch_plugin.h"
 
-
 void one_inch_plugin_call(int message, void *parameters) {
     PRINTF("Handling message %d\n", message);
     switch (message) {

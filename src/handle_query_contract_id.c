@@ -13,6 +13,9 @@ void handle_query_contract_id(void *parameters) {
         case UNOSWAP:
             strlcpy(msg->version, "Unoswap", msg->versionLength);
             break;
+        case UNISWAP_V3_SWAP:
+            strlcpy(msg->version, "Uniswap V3 Swap", msg->versionLength);
+            break;
         default:
             PRINTF("Selector Index :%d not supported\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;

@@ -10,7 +10,7 @@
 
 #define RUN_APPLICATION 1
 
-#define NUM_ONE_INCH_SELECTORS 2
+#define NUM_ONE_INCH_SELECTORS 3
 #define SELECTOR_SIZE          4
 
 #define PLUGIN_NAME "1inch"
@@ -33,6 +33,7 @@ extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
 typedef enum {
     SWAP,
     UNOSWAP,
+    UNISWAP_V3_SWAP,
 } oneInchSelector_t;
 
 #define PARTIAL_FILL 1
@@ -43,6 +44,7 @@ typedef enum {
     RECEIVE_SCREEN,
     BENEFICIARY_SCREEN,
     PARTIAL_FILL_SCREEN,
+    WARN_SCREEN,
     ERROR,
 } screens_t;
 
