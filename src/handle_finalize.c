@@ -1,7 +1,5 @@
 #include "one_inch_plugin.h"
 
-
-
 static void sent_network_token(one_inch_parameters_t *context) {
     context->decimals_sent = WEI_TO_ETHER;
     context->tokens_found |= TOKEN_SENT_FOUND;
@@ -29,18 +27,19 @@ void handle_finalize(void *parameters) {
         }
 
         if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
-            // Address is not network token (0xeee...) so we will need to look up the token in the CAL.
+            // Address is not network token (0xeee...) so we will need to look up the token in the
+            // CAL.
             printf_hex_array("Setting address sent to: ",
                              ADDRESS_LENGTH,
                              context->contract_address_sent);
             msg->tokenLookup1 = context->contract_address_sent;
         } else {
-
             sent_network_token(context);
             msg->tokenLookup1 = NULL;
         }
         if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
-            // Address is not network token (0xeee...) so we will need to look up the token in the CAL.
+            // Address is not network token (0xeee...) so we will need to look up the token in the
+            // CAL.
             printf_hex_array("Setting address received to: ",
                              ADDRESS_LENGTH,
                              context->contract_address_received);

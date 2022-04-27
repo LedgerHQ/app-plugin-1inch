@@ -1,6 +1,5 @@
 #include "one_inch_plugin.h"
 
-
 // Set UI for the "Send" screen.
 static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
     switch (context->selectorIndex) {
@@ -96,7 +95,7 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
 
     bool both_tokens_found = token_received_found && token_sent_found;
     bool both_tokens_not_found = !token_received_found && !token_sent_found;
-    
+
     switch (index) {
         case 0:
             if (both_tokens_found) {

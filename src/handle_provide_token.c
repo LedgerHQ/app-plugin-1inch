@@ -19,7 +19,9 @@ void handle_provide_token(void *parameters) {
         sent_network_token(context);
     } else if (msg->item1 != NULL) {
         context->decimals_sent = msg->item1->token.decimals;
-        strlcpy(context->ticker_sent, (char *) msg->item1->token.ticker, sizeof(context->ticker_sent));
+        strlcpy(context->ticker_sent,
+                (char *) msg->item1->token.ticker,
+                sizeof(context->ticker_sent));
         context->tokens_found |= TOKEN_SENT_FOUND;
     } else {
         // CAL did not find the token and token is not ETH.

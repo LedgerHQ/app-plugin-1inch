@@ -103,8 +103,8 @@ static void handle_unoswap(ethPluginProvideParameter_t *msg, one_inch_parameters
     }
 }
 
-
-static void handle_uniswap_v3_swap(ethPluginProvideParameter_t *msg, one_inch_parameters_t *context) {
+static void handle_uniswap_v3_swap(ethPluginProvideParameter_t *msg,
+                                   one_inch_parameters_t *context) {
     switch (context->next_param) {
         case AMOUNT_SENT:  // fromAmount
             handle_amount_sent(msg, context);
@@ -126,7 +126,6 @@ static void handle_uniswap_v3_swap(ethPluginProvideParameter_t *msg, one_inch_pa
             break;
     }
 }
-
 
 void handle_provide_parameter(void *parameters) {
     ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
