@@ -144,7 +144,7 @@ jobs:
       - name: Build ethereum
         run: |
           make clean
-          make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOS_SDK CHAIN=ethereum
+          make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOS_SDK CHAIN=ethereum ALLOW_DATA=1
       - name: Move binary to test directory
         run: |
           mkdir -p ./tests/elfs/
@@ -170,7 +170,7 @@ jobs:
       - name: Build ethereum
         run: |
           make clean
-          make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOX_SDK CHAIN=ethereum
+          make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOX_SDK CHAIN=ethereum ALLOW_DATA=1
       - name: Move binary to test directory
         run: |
           mkdir -p ./tests/elfs/
@@ -207,7 +207,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v2
         with:
-          node-version: "14.4.0"
+          node-version: "16.4.0"
       - name: Install yarn
         run: |
           npm install -g yarn
