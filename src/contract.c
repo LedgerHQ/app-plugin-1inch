@@ -12,7 +12,10 @@ static const uint8_t ONE_INCH_UNOSWAP_SELECTOR[SELECTOR_SIZE] = {0x2e, 0x95, 0xb
 // uniswapV3Swap 0xe449022e
 static const uint8_t ONE_INCH_UNISWAP_V3_SWAP_SELECTOR[SELECTOR_SIZE] = {0xe4, 0x49, 0x02, 0x2e};
 // unoswapWithPermit 0xa1251d75
-static const uint8_t ONE_INCH_UNOSWAP_WITH_PERMIT_SELECTOR[SELECTOR_SIZE] = {0xa1, 0x25, 0x1d, 0x75};
+static const uint8_t ONE_INCH_UNOSWAP_WITH_PERMIT_SELECTOR[SELECTOR_SIZE] = {0xa1,
+                                                                             0x25,
+                                                                             0x1d,
+                                                                             0x75};
 
 // Array of all the different 1inch selectors.
 const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS] = {

@@ -127,8 +127,8 @@ static void handle_uniswap_v3_swap(ethPluginProvideParameter_t *msg,
     }
 }
 
-static void handle_unoswap_with_permitp(ethPluginProvideParameter_t *msg,
-                                   one_inch_parameters_t *context) {
+static void handle_unoswap_with_permit(ethPluginProvideParameter_t *msg,
+                                       one_inch_parameters_t *context) {
     switch (context->next_param) {
         case TOKEN_SENT:  // fromAmount
             handle_token_sent(msg, context);
@@ -190,7 +190,7 @@ void handle_provide_parameter(void *parameters) {
             }
 
             case UNOSWAP_WITH_PERMIT: {
-                handle_unoswap_with_permitp(msg, context);
+                handle_unoswap_with_permit(msg, context);
                 break;
             }
             default:
