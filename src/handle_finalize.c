@@ -3,13 +3,11 @@
 
 
 static void sent_network_token(one_inch_parameters_t *context) {
-    PRINTF("GD: Sent network token\n");
     context->decimals_sent = WEI_TO_ETHER;
     context->tokens_found |= TOKEN_SENT_FOUND;
 }
 
 static void received_network_token(one_inch_parameters_t *context) {
-    PRINTF("GD: Received network token\n");
     context->decimals_received = WEI_TO_ETHER;
     context->tokens_found |= TOKEN_RECEIVED_FOUND;
 }
@@ -25,9 +23,8 @@ void handle_finalize(void *parameters) {
             if (context->flags & PARTIAL_FILL) msg->numScreens += 1;
         }
         if (context->selectorIndex == UNISWAP_V3_SWAP) {
-            PRINTF("GD: Uniswap v3 add screen\n");
-            // An addiitonal screen is required to display the receive field.
-            msg->numScreens += 1;
+            // An addiitonal screen is required to display the receive, send fields.
+            msg->numScreens += 3;
             if (context->flags & PARTIAL_FILL) msg->numScreens += 1;
         }
 
@@ -38,7 +35,6 @@ void handle_finalize(void *parameters) {
                              context->contract_address_sent);
             msg->tokenLookup1 = context->contract_address_sent;
         } else {
-            PRINTF("GD: Setting address sent to failed\n");
 
             sent_network_token(context);
             msg->tokenLookup1 = NULL;
@@ -50,7 +46,6 @@ void handle_finalize(void *parameters) {
                              context->contract_address_received);
             msg->tokenLookup2 = context->contract_address_received;
         } else {
-            PRINTF("GD: Setting address received to failed\n");
             received_network_token(context);
             msg->tokenLookup2 = NULL;
         }

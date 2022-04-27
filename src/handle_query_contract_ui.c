@@ -7,7 +7,6 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
         case SWAP:
         case UNOSWAP:
         case UNISWAP_V3_SWAP:
-            PRINTF("GD: Send Screen\n");
             strlcpy(msg->title, "Send", msg->titleLength);
             break;
         default:
@@ -16,15 +15,8 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
             return;
     }
 
-    if (!(context->tokens_found & TOKEN_SENT_FOUND)) {
-        PRINTF("GD: Send Screen Unknown token\n");
-        strlcpy(msg->msg, "Unknown token", msg->msgLength);
-        return;
-    }
-
     // set network ticker (ETH, BNB, etc) if needed
     if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
-        PRINTF("GD: Send Screen Network token\n");
         strlcpy(context->ticker_sent, msg->network_ticker, sizeof(context->ticker_sent));
     }
 
@@ -44,7 +36,6 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
         case SWAP:
         case UNOSWAP:
         case UNISWAP_V3_SWAP:
-            PRINTF("GD: Receive Screen\n");
             strlcpy(msg->title, "Receive Min", msg->titleLength);
             break;
         default:
@@ -53,15 +44,8 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
             return;
     }
 
-    if (!(context->tokens_found & TOKEN_RECEIVED_FOUND)) {
-            PRINTF("GD: Receive Screen unknown token\n");
-        strlcpy(msg->msg, "Unknown token", msg->msgLength);
-        return;
-    }
-
     // set network ticker (ETH, BNB, etc) if needed
     if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
-            PRINTF("GD: Receive Screen network token\n");
         strlcpy(context->ticker_received, msg->network_ticker, sizeof(context->ticker_received));
     }
 
@@ -95,21 +79,70 @@ static void set_partial_fill_ui(ethQueryContractUI_t *msg,
     strlcpy(msg->msg, "Enabled", msg->msgLength);
 }
 
+// Set UI for "Warning" screen.
+static void set_warning_ui(ethQueryContractUI_t *msg,
+                           const one_inch_parameters_t *context __attribute__((unused))) {
+    strlcpy(msg->title, "WARNING", msg->titleLength);
+    strlcpy(msg->msg, "Unknown token", msg->msgLength);
+}
+
 // Helper function that returns the enum corresponding to the screen that should be displayed.
 static screens_t get_screen(ethQueryContractUI_t *msg,
                             one_inch_parameters_t *context __attribute__((unused))) {
     uint8_t index = msg->screenIndex;
 
-    if (index == 0) {
-        return SEND_SCREEN;
-    } else if (index == 1) {
-        return RECEIVE_SCREEN;
-    } else if (index == 2) {
-        return BENEFICIARY_SCREEN;
-    } else if (index == 3) {
-        return PARTIAL_FILL_SCREEN;
-    }
+    bool token_sent_found = context->tokens_found & TOKEN_SENT_FOUND;
+    bool token_received_found = context->tokens_found & TOKEN_RECEIVED_FOUND;
 
+    bool both_tokens_found = token_received_found && token_sent_found;
+    bool both_tokens_not_found = !token_received_found && !token_sent_found;
+    
+    switch (index) {
+        case 0:
+            if (both_tokens_found) {
+                return SEND_SCREEN;
+            } else if (both_tokens_not_found) {
+                return WARN_SCREEN;
+            } else if (token_sent_found) {
+                return SEND_SCREEN;
+            } else if (token_received_found) {
+                return WARN_SCREEN;
+            }
+        case 1:
+            if (both_tokens_found) {
+                return RECEIVE_SCREEN;
+            } else if (both_tokens_not_found) {
+                return SEND_SCREEN;
+            } else if (token_sent_found) {
+                return WARN_SCREEN;
+            } else if (token_received_found) {
+                return SEND_SCREEN;
+            }
+        case 2:
+            if (both_tokens_found) {
+                return BENEFICIARY_SCREEN;
+            } else if (both_tokens_not_found) {
+                return WARN_SCREEN;
+            } else {
+                return RECEIVE_SCREEN;
+            }
+        case 3:
+            if (both_tokens_found) {
+                return ERROR;
+            } else if (both_tokens_not_found) {
+                return RECEIVE_SCREEN;
+            } else {
+                return BENEFICIARY_SCREEN;
+            }
+        case 4:
+            if (both_tokens_not_found) {
+                return BENEFICIARY_SCREEN;
+            } else {
+                return ERROR;
+            }
+        default:
+            return ERROR;
+    }
     return ERROR;
 }
 
@@ -133,6 +166,9 @@ void handle_query_contract_ui(void *parameters) {
             break;
         case PARTIAL_FILL_SCREEN:
             set_partial_fill_ui(msg, context);
+            break;
+        case WARN_SCREEN:
+            set_warning_ui(msg, context);
             break;
         default:
             PRINTF("Received an invalid screenIndex\n");

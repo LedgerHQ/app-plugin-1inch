@@ -44,6 +44,7 @@ typedef enum {
     RECEIVE_SCREEN,
     BENEFICIARY_SCREEN,
     PARTIAL_FILL_SCREEN,
+    WARN_SCREEN,
     ERROR,
 } screens_t;
 

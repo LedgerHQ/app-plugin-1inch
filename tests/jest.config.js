@@ -29,7 +29,8 @@ module.exports = {
         // '**/__tests__/**/*.[jt]s?(x)',
         // '**/?(*.)+(spec|test).[tj]s?(x)',
         // '**/?(*.)+(ispec|test).[tj]s?(x)',
-        '**/V4/uniswap_v3_swap.test*',
+        '**/V4/uniswap_v3_swap_polygon.test*',
+        '**/V4/uniswap_v3_swap_ethereum.test*',
     ],
 
     // Stop immediatly when a test fails

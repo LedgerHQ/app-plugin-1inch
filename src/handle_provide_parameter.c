@@ -108,10 +108,14 @@ static void handle_uniswap_v3_swap(ethPluginProvideParameter_t *msg, one_inch_pa
     switch (context->next_param) {
         case AMOUNT_SENT:  // fromAmount
             handle_amount_sent(msg, context);
+            // We call the handle_token_sent method to print "Unknown Token"
+            handle_token_sent(msg, context);
             context->next_param = AMOUNT_RECEIVED;
             break;
         case AMOUNT_RECEIVED:  // toAmount
             handle_amount_received(msg, context);
+            // We call the handle_token_received method to print "Unknown Token"
+            handle_token_received(msg, context);
             context->next_param = NONE;
             break;
         case NONE:
