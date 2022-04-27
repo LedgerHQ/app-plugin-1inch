@@ -44,10 +44,7 @@
                     "plugin": "1inch"
                 },
                 "0xa1251d75": {
-                    "erc20OfInterest": [
-                        "path.0",
-                        "path.-1"
-                    ],
+                    "erc20OfInterest": ["srcToken"],
                     "method": "unoswapWithPermit",
                     "plugin": "1inch"
                 },

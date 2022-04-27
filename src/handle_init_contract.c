@@ -46,6 +46,9 @@ void handle_init_contract(void *parameters) {
         case UNISWAP_V3_SWAP:
             context->next_param = AMOUNT_SENT;
             break;
+        case UNOSWAP_WITH_PERMIT:
+            context->next_param = TOKEN_SENT;
+            break;
         default:
             PRINTF("Missing selectorIndex\n");
             msg->result = ETH_PLUGIN_RESULT_ERROR;
