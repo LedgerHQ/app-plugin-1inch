@@ -98,12 +98,12 @@ jobs:
       - name: Move binary to test directory
         run: |
           mkdir -p ./tests/elfs/
-          mv bin/app.elf ./tests/elfs/apwine_nanos.elf
+          mv bin/app.elf ./tests/elfs/1inch_nanos.elf
       - name: Upload plugin binary
         uses: actions/upload-artifact@v2
         with:
           name: binaries
-          path: tests/elfs/apwine_nanos.elf
+          path: tests/elfs/1inch_nanos.elf
 
   job_build_debug_nano_x:
     name: Build debug Nano X
@@ -122,12 +122,12 @@ jobs:
       - name: Move binary to test directory
         run: |
           mkdir -p ./tests/elfs/
-          mv bin/app.elf ./tests/elfs/apwine_nanox.elf
+          mv bin/app.elf ./tests/elfs/1inch_nanox.elf
       - name: Upload plugin binary
         uses: actions/upload-artifact@v2
         with:
           name: binaries
-          path: tests/elfs/apwine_nanox.elf
+          path: tests/elfs/1inch_nanox.elf
 
   job_build_ethereum_nano_s:
     name: Build Ethereum application for Nano S testing
