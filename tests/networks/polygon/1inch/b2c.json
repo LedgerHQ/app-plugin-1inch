@@ -42,8 +42,7 @@
                 },
                 "0x2521b930": {
                     "erc20OfInterest": [
-                        "path.0",
-                        "path.-1"
+                        "srcToken"
                     ],
                     "method": "uniswapV3SwapToWithPermit",
                     "plugin": "1inch"

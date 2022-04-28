@@ -19,6 +19,9 @@ void handle_query_contract_id(void *parameters) {
         case UNISWAP_V3_SWAP_TO:
             strlcpy(msg->version, "Uniswap V3 Swap To", msg->versionLength);
             break;
+        case UNISWAP_V3_SWAP_TO_WITH_PERMIT:
+            strlcpy(msg->version, "Uniswap V3 Swap To With Permit", msg->versionLength);
+            break;
         case UNOSWAP_WITH_PERMIT:
             strlcpy(msg->version, "Unoswap With Permit", msg->versionLength);
             break;

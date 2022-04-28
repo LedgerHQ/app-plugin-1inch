@@ -28,7 +28,7 @@ void handle_provide_token(void *parameters) {
         context->decimals_sent = DEFAULT_DECIMAL;
         strlcpy(context->ticker_sent, DEFAULT_TICKER, sizeof(context->ticker_sent));
         // // We will need an additional screen to display a warning message.
-        // msg->additionalScreens++;
+        msg->additionalScreens++;
     }
 
     if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
@@ -44,7 +44,7 @@ void handle_provide_token(void *parameters) {
         context->decimals_received = DEFAULT_DECIMAL;
         strlcpy(context->ticker_received, DEFAULT_TICKER, sizeof(context->ticker_sent));
         // // We will need an additional screen to display a warning message.
-        // msg->additionalScreens++;
+        msg->additionalScreens++;
     }
 
     msg->result = ETH_PLUGIN_RESULT_OK;
