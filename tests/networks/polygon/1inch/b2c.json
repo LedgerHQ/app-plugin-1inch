@@ -35,19 +35,6 @@
                     "method": "swap",
                     "plugin": "1inch"
                 },
-                "0x2e95b6c8": {
-                    "erc20OfInterest": [
-                        "path.0",
-                        "path.-1"
-                    ],
-                    "method": "unoswap",
-                    "plugin": "1inch"
-                },
-                "0xa1251d75": {
-                    "erc20OfInterest": ["srcToken"],
-                    "method": "unoswapWithPermit",
-                    "plugin": "1inch"
-                },
                 "0xe449022e": {
                     "erc20OfInterest": [],
                     "method": "uniswapV3Swap",
@@ -69,36 +56,12 @@
                     "method": "uniswapV3SwapTo",
                     "plugin": "1inch"
                 },
-                "0xb0431182": {
-                    "erc20OfInterest": [
-                        "path.0",
-                        "path.-1"
-                    ],
-                    "method": "clipperSwap",
-                    "plugin": "1inch"
-                },
-                "0xd6a92a5d": {
-                    "erc20OfInterest": [
-                        "path.0",
-                        "path.-1"
-                    ],
-                    "method": "clipperSwapToWithPermit",
-                    "plugin": "1inch"
-                },
                 "0xd0a3b665": {
                     "erc20OfInterest": [
                         "path.0",
                         "path.-1"
                     ],
                     "method": "fillOrderRFQ",
-                    "plugin": "1inch"
-                },
-                "0x4cc4a27b": {
-                    "erc20OfInterest": [
-                        "path.0",
-                        "path.-1"
-                    ],
-                    "method": "fillOrderRFQToWithPermit",
                     "plugin": "1inch"
                 }
             }

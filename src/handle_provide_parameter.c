@@ -130,11 +130,11 @@ static void handle_uniswap_v3_swap(ethPluginProvideParameter_t *msg,
 static void handle_unoswap_with_permit(ethPluginProvideParameter_t *msg,
                                        one_inch_parameters_t *context) {
     switch (context->next_param) {
-        case TOKEN_SENT:  // fromAmount
+        case TOKEN_SENT:  // fromToken
             handle_token_sent(msg, context);
             context->next_param = AMOUNT_SENT;
             break;
-        case AMOUNT_SENT:  // toAmount
+        case AMOUNT_SENT:  // fromAmount
             handle_amount_sent(msg, context);
             context->next_param = AMOUNT_RECEIVED;
             break;
@@ -142,6 +142,33 @@ static void handle_unoswap_with_permit(ethPluginProvideParameter_t *msg,
             handle_amount_received(msg, context);
             // We call the handle_token_sent method to print "Unknown Token"
             handle_token_received(msg, context);
+            context->next_param = NONE;
+            break;
+        case NONE:
+            break;
+        default:
+            PRINTF("Param not supported\n");
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
+static void handle_clipper_swap(ethPluginProvideParameter_t *msg, one_inch_parameters_t *context) {
+    switch (context->next_param) {
+        case TOKEN_SENT:  // fromToken
+            handle_token_sent(msg, context);
+            context->next_param = TOKEN_RECEIVED;
+            break;
+        case TOKEN_RECEIVED:  // toToken
+            handle_token_received(msg, context);
+            context->next_param = AMOUNT_SENT;
+            break;
+        case AMOUNT_SENT:  // fromAmount
+            handle_amount_sent(msg, context);
+            context->next_param = AMOUNT_RECEIVED;
+            break;
+        case AMOUNT_RECEIVED:  // toAmount
+            handle_amount_received(msg, context);
             context->next_param = NONE;
             break;
         case NONE:
@@ -191,6 +218,11 @@ void handle_provide_parameter(void *parameters) {
 
             case UNOSWAP_WITH_PERMIT: {
                 handle_unoswap_with_permit(msg, context);
+                break;
+            }
+
+            case CLIPPER_SWAP: {
+                handle_clipper_swap(msg, context);
                 break;
             }
             default:
