@@ -13,6 +13,11 @@ static const uint8_t ONE_INCH_UNOSWAP_SELECTOR[SELECTOR_SIZE] = {0x2e, 0x95, 0xb
 static const uint8_t ONE_INCH_UNISWAP_V3_SWAP_SELECTOR[SELECTOR_SIZE] = {0xe4, 0x49, 0x02, 0x2e};
 // uniswapV3SwapTo 0xbc80f1a8
 static const uint8_t ONE_INCH_UNISWAP_V3_SWAP_TO_SELECTOR[SELECTOR_SIZE] = {0xbc, 0x80, 0xf1, 0xa8};
+// uniswapV3SwapToWithPermit 0x2521b930
+static const uint8_t ONE_INCH_UNISWAP_V3_SWAP_TO_WITH_PERMIT_SELECTOR[SELECTOR_SIZE] = {0x25,
+                                                                                        0x21,
+                                                                                        0xb9,
+                                                                                        0x30};
 // unoswapWithPermit 0xa1251d75
 static const uint8_t ONE_INCH_UNOSWAP_WITH_PERMIT_SELECTOR[SELECTOR_SIZE] = {0xa1,
                                                                              0x25,
@@ -32,6 +37,7 @@ const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS] = {
     ONE_INCH_UNOSWAP_SELECTOR,
     ONE_INCH_UNISWAP_V3_SWAP_SELECTOR,
     ONE_INCH_UNISWAP_V3_SWAP_TO_SELECTOR,
+    ONE_INCH_UNISWAP_V3_SWAP_TO_WITH_PERMIT_SELECTOR,
     ONE_INCH_UNOSWAP_WITH_PERMIT_SELECTOR,
     ONE_INCH_CLIPPER_SWAP_SELECTOR,
     ONE_INCH_CLIPPER_SWAP_TO_WITH_PERMIT_SELECTOR,
