@@ -62,10 +62,7 @@
                     "plugin": "1inch"
                 },
                 "0xbc80f1a8": {
-                    "erc20OfInterest": [
-                        "path.0",
-                        "path.-1"
-                    ],
+                    "erc20OfInterest": [],
                     "method": "uniswapV3SwapTo",
                     "plugin": "1inch"
                 },

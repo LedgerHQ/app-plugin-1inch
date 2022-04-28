@@ -127,6 +127,34 @@ static void handle_uniswap_v3_swap(ethPluginProvideParameter_t *msg,
     }
 }
 
+static void handle_uniswap_v3_swap_to(ethPluginProvideParameter_t *msg,
+                                      one_inch_parameters_t *context) {
+    switch (context->next_param) {
+        case DST_RECEIVER:  // fromAmount
+            handle_beneficiary(msg, context);
+            context->next_param = AMOUNT_SENT;
+            break;
+        case AMOUNT_SENT:  // fromAmount
+            handle_amount_sent(msg, context);
+            // We call the handle_token_sent method to print "Unknown Token"
+            handle_token_sent(msg, context);
+            context->next_param = AMOUNT_RECEIVED;
+            break;
+        case AMOUNT_RECEIVED:  // toAmount
+            handle_amount_received(msg, context);
+            // We call the handle_token_received method to print "Unknown Token"
+            handle_token_received(msg, context);
+            context->next_param = NONE;
+            break;
+        case NONE:
+            break;
+        default:
+            PRINTF("Param not supported\n");
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
 static void handle_unoswap_with_permit(ethPluginProvideParameter_t *msg,
                                        one_inch_parameters_t *context) {
     switch (context->next_param) {
@@ -245,6 +273,11 @@ void handle_provide_parameter(void *parameters) {
 
             case UNISWAP_V3_SWAP: {
                 handle_uniswap_v3_swap(msg, context);
+                break;
+            }
+
+            case UNISWAP_V3_SWAP_TO: {
+                handle_uniswap_v3_swap_to(msg, context);
                 break;
             }
 

@@ -16,19 +16,24 @@ void handle_finalize(void *parameters) {
     if (context->valid) {
         msg->numScreens = 1;
         if (context->selectorIndex == CLIPPER_SWAP) {
-            // An addiitonal screen is required to display the receive and beneficiary field.
+            // An additional screen is required to display the receive and beneficiary field.
             msg->numScreens += 1;
             if (context->flags & PARTIAL_FILL) msg->numScreens += 1;
         }
         if (context->selectorIndex == SWAP || context->selectorIndex == UNOSWAP_WITH_PERMIT ||
             context->selectorIndex == CLIPPER_SWAP_TO_WITH_PERMIT) {
-            // An addiitonal screen is required to display the receive and beneficiary field.
+            // An additional screen is required to display the receive and beneficiary field.
             msg->numScreens += 2;
             if (context->flags & PARTIAL_FILL) msg->numScreens += 1;
         }
         if (context->selectorIndex == UNISWAP_V3_SWAP) {
-            // An addiitonal screen is required to display the receive and send field.
+            // An additional screen is required to display the receive and send field.
             msg->numScreens += 3;
+            if (context->flags & PARTIAL_FILL) msg->numScreens += 1;
+        }
+        if (context->selectorIndex == UNISWAP_V3_SWAP_TO) {
+            // An additional screen is required to display the receive, send and beneficiary field.
+            msg->numScreens += 4;
             if (context->flags & PARTIAL_FILL) msg->numScreens += 1;
         }
 
