@@ -275,7 +275,7 @@ void handle_provide_parameter(void *parameters) {
                 handle_uniswap_v3_swap(msg, context);
                 break;
             }
-            
+
             case UNISWAP_V3_SWAP_TO: {
                 handle_uniswap_v3_swap_to(msg, context);
                 break;
