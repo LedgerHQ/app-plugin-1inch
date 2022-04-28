@@ -153,8 +153,7 @@ static void handle_unoswap_with_permit(ethPluginProvideParameter_t *msg,
     }
 }
 
-static void handle_clipper_swap(ethPluginProvideParameter_t *msg,
-                                one_inch_parameters_t *context) {
+static void handle_clipper_swap(ethPluginProvideParameter_t *msg, one_inch_parameters_t *context) {
     switch (context->next_param) {
         case TOKEN_SENT:  // fromToken
             handle_token_sent(msg, context);
