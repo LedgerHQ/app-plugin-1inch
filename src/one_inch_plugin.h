@@ -26,7 +26,7 @@ extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
 
 // Returns 1 if corresponding address is the 1inch address for the chain token (ETH, BNB, MATIC,
 // etc.. are 0xeeeee...).
-#define ADDRESS_IS_NETWORK_TOKEN(_addr)                                \
+#define ADDRESS_IS_NETWORK_TOKEN(_addr)                      \
     (!memcmp(_addr, ONE_INCH_ETH_ADDRESS, ADDRESS_LENGTH) || \
      !memcmp(_addr, NULL_ETH_ADDRESS, ADDRESS_LENGTH))
 

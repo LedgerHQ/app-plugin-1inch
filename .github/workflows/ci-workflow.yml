@@ -3,14 +3,16 @@ name: Compilation & tests
 on:
   push:
     branches:
-      - master
+      - main
+      - develop
   pull_request:
     branches:
-      - master
+      - main
+      - develop
 
 jobs:
-  job_build_debug:
-    name: Build debug
+  job_build_debug_nano_s:
+    name: Build debug Nano S
     runs-on: ubuntu-latest
 
     container:
@@ -22,19 +24,43 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Build 1inch plugin
+      - name: Build plugin for Nano S
         run: |
-          make DEBUG=1
+          make BOLOS_SDK=$NANOS_SDK DEBUG=1
+          mv bin/app.elf plugin_nanos.elf
 
-      - name: Upload 1inch binary
+      - name: Upload plugin artifact for Nano S
         uses: actions/upload-artifact@v2
         with:
-          name: 1inch-app-debug
-          path: bin
+          name: plugin-artifacts
+          path: ./plugin_nanos.elf
+
+  job_build_debug_nano_x:
+    name: Build debug Nano X
+    runs-on: ubuntu-latest
+
+    container:
+      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
+
+    steps:
+      - name: Clone
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Build plugin for Nano X
+        run: |
+          make BOLOS_SDK=$NANOX_SDK DEBUG=1
+          mv bin/app.elf plugin_nanox.elf
+
+      - name: Upload plugin artifact for Nano X
+        uses: actions/upload-artifact@v2
+        with:
+          name: plugin-artifacts
+          path: ./plugin_nanox.elf
 
   job_scan_build:
     name: Clang Static Analyzer
-    needs: job_build_debug
     runs-on: ubuntu-latest
 
     container:
@@ -55,7 +81,6 @@ jobs:
 
   job_coverity_scan:
     name: Coverity Scan
-    needs: job_build_debug
     runs-on: ubuntu-latest
 
     container:
@@ -81,3 +106,35 @@ jobs:
         env:
           EMAIL: ${{ secrets.COVERITY_SCAN_EMAIL }}
           TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
+
+  jobs-e2e-tests:
+    needs: [job_build_debug_nano_s, job_build_debug_nano_x]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: |
+          id
+          echo $HOME
+          echo $DISPLAY
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14.4.0"
+      - name: Install yarn
+        run: |
+          npm install -g yarn
+      - name: Build/Install build js deps
+        run: |
+          cd tests && yarn install
+      - name: Download plugin artifacts
+        uses: actions/download-artifact@v2
+        with:
+            path: tests/elfs
+      - name: Copy plugin artifacts
+        run: |
+            mv tests/elfs/plugin-artifacts/*.elf tests/elfs
+      - name: Run zemu tests
+        run: |
+          cd tests && yarn test

@@ -11,7 +11,8 @@ const simOptions = {
     model: 'nanos',
     logging: true,
     X11: false,
-    startDelay: 15000,
+    startDelay: 10000,
+    startText: 'is ready',
     custom: '',
 };
 
@@ -19,7 +20,7 @@ const Resolve = require('path').resolve;
 
 const APP_PATH_NANOS = Resolve('elfs/ethereum_nanos.elf');
 
-const PLUGIN_LIB_NANOS = { '1inch': Resolve('elfs/1inch_nanos.elf') };
+const PLUGIN_LIB_NANOS = { '1inch': Resolve('elfs/plugin_nanos.elf') };
 
 export function zemu(func) {
     return async () => {
