@@ -15,6 +15,11 @@ void handle_finalize(void *parameters) {
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
     if (context->valid) {
         msg->numScreens = 1;
+        if (context->selectorIndex == CLIPPER_SWAP) {
+            // An addiitonal screen is required to display the receive and beneficiary field.
+            msg->numScreens += 1;
+            if (context->flags & PARTIAL_FILL) msg->numScreens += 1;
+        }
         if (context->selectorIndex == SWAP || context->selectorIndex == UNOSWAP_WITH_PERMIT) {
             // An addiitonal screen is required to display the receive and beneficiary field.
             msg->numScreens += 2;

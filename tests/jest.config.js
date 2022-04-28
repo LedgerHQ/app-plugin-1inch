@@ -29,7 +29,7 @@ module.exports = {
         // '**/__tests__/**/*.[jt]s?(x)',
         // '**/?(*.)+(spec|test).[tj]s?(x)',
         // '**/?(*.)+(ispec|test).[tj]s?(x)',
-        '**/V4/unoswap_with_permit_ethereum.test*',
+        '**/V4/clipper_swap_ethereum.test*',
     ],
 
     // Stop immediatly when a test fails
