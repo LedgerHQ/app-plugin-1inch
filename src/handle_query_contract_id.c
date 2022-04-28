@@ -22,6 +22,9 @@ void handle_query_contract_id(void *parameters) {
         case CLIPPER_SWAP:
             strlcpy(msg->version, "Clipper Swap", msg->versionLength);
             break;
+        case CLIPPER_SWAP_TO_WITH_PERMIT:
+            strlcpy(msg->version, "Clipper Swap To With Permit", msg->versionLength);
+            break;
         default:
             PRINTF("Selector Index :%d not supported\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;

@@ -79,8 +79,8 @@
                 },
                 "0xd6a92a5d": {
                     "erc20OfInterest": [
-                        "path.0",
-                        "path.-1"
+                        "srcToken",
+                        "dstToken"
                     ],
                     "method": "clipperSwapToWithPermit",
                     "plugin": "1inch"

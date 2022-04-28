@@ -10,7 +10,7 @@
 
 #define RUN_APPLICATION 1
 
-#define NUM_ONE_INCH_SELECTORS 5
+#define NUM_ONE_INCH_SELECTORS 6
 #define SELECTOR_SIZE          4
 
 #define PLUGIN_NAME "1inch"
@@ -36,6 +36,7 @@ typedef enum {
     UNISWAP_V3_SWAP,
     UNOSWAP_WITH_PERMIT,
     CLIPPER_SWAP,
+    CLIPPER_SWAP_TO_WITH_PERMIT,
 } oneInchSelector_t;
 
 #define PARTIAL_FILL 1
