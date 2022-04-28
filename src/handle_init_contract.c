@@ -46,6 +46,9 @@ void handle_init_contract(void *parameters) {
         case UNISWAP_V3_SWAP:
             context->next_param = AMOUNT_SENT;
             break;
+        case UNISWAP_V3_SWAP_TO:
+            context->next_param = DST_RECEIVER;
+            break;
         case UNOSWAP_WITH_PERMIT:
             context->next_param = TOKEN_SENT;
             break;

@@ -34,6 +34,9 @@ module.exports = {
         '**/V4/unoswap_with_permit_ethereum.test*',
         '**/V4/clipper_swap_ethereum.test*',
         '**/V4/clipper_swap_to_with_permit_ethereum.test*',
+        '**/V4/uniswap_v3_swap_to_polygon.test*',
+        '**/V4/uniswap_v3_swap_to_ethereum.test*',
+        
     ],
 
     // Stop immediatly when a test fails
