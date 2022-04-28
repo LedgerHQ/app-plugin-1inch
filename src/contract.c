@@ -18,6 +18,11 @@ static const uint8_t ONE_INCH_UNOSWAP_WITH_PERMIT_SELECTOR[SELECTOR_SIZE] = {0xa
                                                                              0x75};
 // clipperSwap 0xb0431182
 static const uint8_t ONE_INCH_CLIPPER_SWAP_SELECTOR[SELECTOR_SIZE] = {0xb0, 0x43, 0x11, 0x82};
+// clipperSwapToWithPermit 0xd6a92a5d
+static const uint8_t ONE_INCH_CLIPPER_SWAP_TO_WITH_PERMIT_SELECTOR[SELECTOR_SIZE] = {0xd6,
+                                                                                     0xa9,
+                                                                                     0x2a,
+                                                                                     0x5d};
 
 // Array of all the different 1inch selectors.
 const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS] = {
@@ -26,6 +31,7 @@ const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS] = {
     ONE_INCH_UNISWAP_V3_SWAP_SELECTOR,
     ONE_INCH_UNOSWAP_WITH_PERMIT_SELECTOR,
     ONE_INCH_CLIPPER_SWAP_SELECTOR,
+    ONE_INCH_CLIPPER_SWAP_TO_WITH_PERMIT_SELECTOR,
 };
 
 // 1inch uses `0xeeeee` as a dummy address to represent ETH.

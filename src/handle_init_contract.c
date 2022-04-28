@@ -52,6 +52,9 @@ void handle_init_contract(void *parameters) {
         case CLIPPER_SWAP:
             context->next_param = TOKEN_SENT;
             break;
+        case CLIPPER_SWAP_TO_WITH_PERMIT:
+            context->next_param = DST_RECEIVER;
+            break;
         default:
             PRINTF("Missing selectorIndex\n");
             msg->result = ETH_PLUGIN_RESULT_ERROR;

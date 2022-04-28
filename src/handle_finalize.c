@@ -20,7 +20,7 @@ void handle_finalize(void *parameters) {
             msg->numScreens += 1;
             if (context->flags & PARTIAL_FILL) msg->numScreens += 1;
         }
-        if (context->selectorIndex == SWAP || context->selectorIndex == UNOSWAP_WITH_PERMIT) {
+        if (context->selectorIndex == SWAP || context->selectorIndex == UNOSWAP_WITH_PERMIT || context->selectorIndex == CLIPPER_SWAP_TO_WITH_PERMIT) {
             // An addiitonal screen is required to display the receive and beneficiary field.
             msg->numScreens += 2;
             if (context->flags & PARTIAL_FILL) msg->numScreens += 1;
