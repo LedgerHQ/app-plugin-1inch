@@ -14,6 +14,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
             strlcpy(msg->title, "Send", msg->titleLength);
             break;
         case FILL_ORDER_RFQ:
+        case FILL_ORDER_RFQ_TO_WITH_PERMIT:
             strlcpy(msg->title, "Making", msg->titleLength);
             break;
         default:
@@ -51,6 +52,7 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
             strlcpy(msg->title, "Receive Min", msg->titleLength);
             break;
         case FILL_ORDER_RFQ:
+        case FILL_ORDER_RFQ_TO_WITH_PERMIT:
             strlcpy(msg->title, "Taking", msg->titleLength);
             break;
         default:

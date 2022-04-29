@@ -87,10 +87,7 @@
                     "plugin": "1inch"
                 },
                 "0x4cc4a27b": {
-                    "erc20OfInterest": [
-                        "path.0",
-                        "path.-1"
-                    ],
+                    "erc20OfInterest": [],
                     "method": "fillOrderRFQToWithPermit",
                     "plugin": "1inch"
                 }

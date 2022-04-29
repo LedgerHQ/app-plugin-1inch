@@ -241,7 +241,7 @@ static void handle_clipper_swap(ethPluginProvideParameter_t *msg, one_inch_param
 static void handle_clipper_to_with_permit_swap(ethPluginProvideParameter_t *msg,
                                                one_inch_parameters_t *context) {
     switch (context->next_param) {
-        case DST_RECEIVER:  // fromToken
+        case DST_RECEIVER:  // dstReceiver
             handle_beneficiary(msg, context);
             context->next_param = TOKEN_SENT;
             break;
@@ -278,6 +278,36 @@ static void handle_fill_order_rfq(ethPluginProvideParameter_t *msg, one_inch_par
             break;
         case AMOUNT_RECEIVED:  // toAmount
             handle_amount_received(msg, context);
+            context->next_param = NONE;
+            break;
+        case NONE:
+            break;
+        default:
+            PRINTF("Param not supported\n");
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
+static void handle_fill_order_rfq_to_with_permit(ethPluginProvideParameter_t *msg,
+                                                 one_inch_parameters_t *context) {
+    switch (context->next_param) {
+        case AMOUNT_SENT:  // fromAmount
+            handle_amount_sent(msg, context);
+            // We call the handle_token_sent method to print "Unknown Token"
+            handle_token_sent(msg, context);
+            context->next_param = AMOUNT_RECEIVED;
+            break;
+        case AMOUNT_RECEIVED:  // toAmount
+            handle_amount_received(msg, context);
+            // We call the handle_token_received method to print "Unknown Token"
+            handle_token_received(msg, context);
+            context->skip += 3;
+            context->next_param = DST_RECEIVER;
+            break;
+        case DST_RECEIVER:  // dstReceiver
+            
+            handle_beneficiary(msg, context);
             context->next_param = NONE;
             break;
         case NONE:
@@ -344,6 +374,10 @@ void handle_provide_parameter(void *parameters) {
             }
             case FILL_ORDER_RFQ: {
                 handle_fill_order_rfq(msg, context);
+                break;
+            }
+            case FILL_ORDER_RFQ_TO_WITH_PERMIT: {
+                handle_fill_order_rfq_to_with_permit(msg, context);
                 break;
             }
             default:

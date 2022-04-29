@@ -34,6 +34,9 @@ void handle_query_contract_id(void *parameters) {
         case FILL_ORDER_RFQ:
             strlcpy(msg->version, "Fill Order RFQ", msg->versionLength);
             break;
+        case FILL_ORDER_RFQ_TO_WITH_PERMIT:
+            strlcpy(msg->version, "Fill Order RFQ To With Permit", msg->versionLength);
+            break;
         default:
             PRINTF("Selector Index :%d not supported\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
