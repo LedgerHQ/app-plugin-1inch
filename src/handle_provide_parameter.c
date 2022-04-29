@@ -270,7 +270,8 @@ static void handle_clipper_to_with_permit_swap(ethPluginProvideParameter_t *msg,
     }
 }
 
-static void handle_fill_order_rfq(ethPluginProvideParameter_t *msg, one_inch_parameters_t *context) {
+static void handle_fill_order_rfq(ethPluginProvideParameter_t *msg,
+                                  one_inch_parameters_t *context) {
     switch (context->next_param) {
         case AMOUNT_SENT:  // fromAmount
             handle_amount_sent(msg, context);
@@ -306,7 +307,6 @@ static void handle_fill_order_rfq_to_with_permit(ethPluginProvideParameter_t *ms
             context->next_param = DST_RECEIVER;
             break;
         case DST_RECEIVER:  // dstReceiver
-            
             handle_beneficiary(msg, context);
             context->next_param = NONE;
             break;
