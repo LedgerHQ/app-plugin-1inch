@@ -61,6 +61,14 @@ void handle_init_contract(void *parameters) {
         case CLIPPER_SWAP_TO_WITH_PERMIT:
             context->next_param = DST_RECEIVER;
             break;
+        case FILL_ORDER_RFQ:
+            context->skip = 2;
+            context->next_param = AMOUNT_SENT;
+            break;
+        case FILL_ORDER_RFQ_TO_WITH_PERMIT:
+            context->skip = 5;
+            context->next_param = AMOUNT_SENT;
+            break;
         default:
             PRINTF("Missing selectorIndex\n");
             msg->result = ETH_PLUGIN_RESULT_ERROR;

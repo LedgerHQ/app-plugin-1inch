@@ -13,6 +13,10 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
         case CLIPPER_SWAP_TO_WITH_PERMIT:
             strlcpy(msg->title, "Send", msg->titleLength);
             break;
+        case FILL_ORDER_RFQ:
+        case FILL_ORDER_RFQ_TO_WITH_PERMIT:
+            strlcpy(msg->title, "Making", msg->titleLength);
+            break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
@@ -46,6 +50,10 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
         case CLIPPER_SWAP:
         case CLIPPER_SWAP_TO_WITH_PERMIT:
             strlcpy(msg->title, "Receive Min", msg->titleLength);
+            break;
+        case FILL_ORDER_RFQ:
+        case FILL_ORDER_RFQ_TO_WITH_PERMIT:
+            strlcpy(msg->title, "Taking", msg->titleLength);
             break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);

@@ -29,8 +29,6 @@
             "selectors": {
                 "0x7c025200": {
                     "erc20OfInterest": [
-                        "tokenA",
-                        "tokenB"
                     ],
                     "method": "swap",
                     "plugin": "1inch"
@@ -53,10 +51,7 @@
                     "plugin": "1inch"
                 },
                 "0xd0a3b665": {
-                    "erc20OfInterest": [
-                        "path.0",
-                        "path.-1"
-                    ],
+                    "erc20OfInterest": [],
                     "method": "fillOrderRFQ",
                     "plugin": "1inch"
                 }
