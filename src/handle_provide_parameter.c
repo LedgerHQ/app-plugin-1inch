@@ -270,6 +270,25 @@ static void handle_clipper_to_with_permit_swap(ethPluginProvideParameter_t *msg,
     }
 }
 
+static void handle_fill_order_rfq(ethPluginProvideParameter_t *msg, one_inch_parameters_t *context) {
+    switch (context->next_param) {
+        case AMOUNT_SENT:  // fromAmount
+            handle_amount_sent(msg, context);
+            context->next_param = AMOUNT_RECEIVED;
+            break;
+        case AMOUNT_RECEIVED:  // toAmount
+            handle_amount_received(msg, context);
+            context->next_param = NONE;
+            break;
+        case NONE:
+            break;
+        default:
+            PRINTF("Param not supported\n");
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
 void handle_provide_parameter(void *parameters) {
     ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
@@ -295,39 +314,36 @@ void handle_provide_parameter(void *parameters) {
                 handle_unoswap(msg, context);
                 break;
             }
-
             case SWAP: {
                 handle_swap(msg, context);
                 break;
             }
-
             case UNISWAP_V3_SWAP: {
                 handle_uniswap_v3_swap(msg, context);
                 break;
             }
-
             case UNISWAP_V3_SWAP_TO: {
                 handle_uniswap_v3_swap_to(msg, context);
                 break;
             }
-
             case UNISWAP_V3_SWAP_TO_WITH_PERMIT: {
                 handle_uniswap_v3_swap_to_with_permit(msg, context);
                 break;
             }
-
             case UNOSWAP_WITH_PERMIT: {
                 handle_unoswap_with_permit(msg, context);
                 break;
             }
-
             case CLIPPER_SWAP: {
                 handle_clipper_swap(msg, context);
                 break;
             }
-
             case CLIPPER_SWAP_TO_WITH_PERMIT: {
                 handle_clipper_to_with_permit_swap(msg, context);
+                break;
+            }
+            case FILL_ORDER_RFQ: {
+                handle_fill_order_rfq(msg, context);
                 break;
             }
             default:
