@@ -1,4 +1,4 @@
-import { processTest } from "../test.fixture";
+import { processTest, populateTransaction } from "../test.fixture";
 
 const contractName = "AggregationRouterV3";
 
@@ -7,22 +7,28 @@ const testDirSuffix = "unoswap_known_v3"; // <= directory to compare device snap
 const testNetwork = "ethereum";
 const signedPlugin = false;
 
-// From : https://etherscan.io/tx/0x30517d1dab4b5a24bf8298b3a6111743e6801ace0baf915f08db93b828395998
-const rawTx = "0xf9012c82035885098bca5a00830257129411111112542d85b3ef69ae05771c2dccff4faa2680b8c42e95b6c80000000000000000000000000391d2021f89dc339f60fff84546ea23e337750f000000000000000000000000000000000000000000000027657afc260bde280000000000000000000000000000000000000000000000000000000005e1eeb6f70000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000100000000000000003b6d03406591c4bcd6d7a1eb4e537da8b78676c1576ba24426a07d41ad4e4fb0c768e09d67acbc4ec093272a7f136ead7eebc9d019c0631bff4da076cd9384abc7df529307c5c0ebf757394662c254babdeed909817a84830b4e34";
+const contractAddr = "0x11111112542d85b3ef69ae05771c2dccff4faa26";
+const chainID = 1;
+
+// From : https://etherscan.io/tx/0x9178e7f96250e1985f3a31a4cd2b38375ad59704e289e880c219b1e039508276
+const inputData = "0x2e95b6c8000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec700000000000000000000000000000000000000000000000000000000167766e200000000000000000000000000000000000000000000000001c65267ab269c1f00000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000001c0000000000000003b6d03400d4a11d5eeaac28ec3f61d100daf4d40471f18520bd34b36";
+
+// Create serializedTx and remove the "0x" prefix
+const serializedTx = populateTransaction(contractAddr, inputData, chainID);
 
 const devices = [
     {
         name: "nanos",
         label: "Nano S",
-        steps: 4, // <= Define the number of steps for this test case and this device
+        steps: 7, // <= Define the number of steps for this test case and this device
     },
     {
         name: "nanox",
         label: "Nano X",
-        steps: 4, // <= Define the number of steps for this test case and this device
+        steps: 6, // <= Define the number of steps for this test case and this device
     }
 ];
 
 devices.forEach((device) =>
-    processTest(device, contractName, testLabel, testDirSuffix, rawTx, signedPlugin, "", testNetwork)
+    processTest(device, contractName, testLabel, testDirSuffix, "", signedPlugin, serializedTx, testNetwork)
 );

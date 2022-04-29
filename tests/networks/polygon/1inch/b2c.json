@@ -12,14 +12,6 @@
                     ],
                     "method": "swap",
                     "plugin": "1inch"
-                },
-                "0x2e95b6c8": {
-                    "erc20OfInterest": [
-                        "path.0",
-                        "path.-1"
-                    ],
-                    "method": "unoswap",
-                    "plugin": "1inch"
                 }
             }
         },
