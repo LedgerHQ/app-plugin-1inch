@@ -19,7 +19,7 @@ void handle_finalize(void *parameters) {
             // An additional screen is required to display the `beneficiary` field.
             msg->numScreens += 1;
         }
-        if (context->selectorIndex == SWAP ) {
+        if (context->selectorIndex == SWAP) {
             // An additional screen is required to display the partial fill field.
             msg->numScreens += 1;
         }
