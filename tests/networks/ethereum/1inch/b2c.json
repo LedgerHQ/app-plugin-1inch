@@ -7,8 +7,8 @@
             "selectors": {
                 "0x7c025200": {
                     "erc20OfInterest": [
-                        "tokenA",
-                        "tokenB"
+                        "desc.srcToken",
+                        "desc.dstToken"
                     ],
                     "method": "swap",
                     "plugin": "1inch"
@@ -28,8 +28,8 @@
             "selectors": {
                 "0x7c025200": {
                     "erc20OfInterest": [
-                        "tokenA",
-                        "tokenB"
+                        "desc.srcToken",
+                        "desc.dstToken"
                     ],
                     "method": "swap",
                     "plugin": "1inch"
