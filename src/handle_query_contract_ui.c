@@ -145,15 +145,23 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
             }
         case 3:
             if (both_tokens_found) {
-                return ERROR;
+                return PARTIAL_FILL_SCREEN;
             } else if (both_tokens_not_found) {
                 return RECEIVE_SCREEN;
             } else {
                 return BENEFICIARY_SCREEN;
             }
         case 4:
-            if (both_tokens_not_found) {
+            if (both_tokens_found) {
+                return ERROR;
+            } else if (both_tokens_not_found) {
                 return BENEFICIARY_SCREEN;
+            } else {
+                return PARTIAL_FILL_SCREEN;
+            }
+        case 5:
+            if (both_tokens_not_found) {
+                return PARTIAL_FILL_SCREEN;
             } else {
                 return ERROR;
             }
