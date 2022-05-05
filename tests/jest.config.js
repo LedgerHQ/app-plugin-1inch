@@ -51,6 +51,7 @@ module.exports = {
         '**/V4/uniswap_v3_swap_to_with_permit_ethereum.test*',
         '**/V4/uniswap_v3_swap_to_with_permit_polygon.test*',
         '**/V4/fill_order_rfq_to_with_permit_ethereum.test*',
+        '**/V4/fill_order_rfq_to_with_permit_polygon.test*',
         '**/V4/unoswap_native_ethereum.test*',
         '**/V4/unoswap_known_ethereum.test*',
         '**/V4/unoswap_unknown_ethereum.test*',
