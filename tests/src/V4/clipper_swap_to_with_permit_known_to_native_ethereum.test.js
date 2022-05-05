@@ -2,8 +2,8 @@ import { processTest, populateTransaction } from "../test.fixture";
 
 const contractName = "AggregationRouterV4";
 
-const testLabel = "clipperSwapToWithPermitKnownToKnown"; // <= Name of the test
-const testDirSuffix = "clipper_swap_to_with_permit_known_to_known"; // <= directory to compare device snapshots to
+const testLabel = "clipperSwapToWithPermitKnownToNative"; // <= Name of the test
+const testDirSuffix = "clipper_swap_to_with_permit_known_to_native"; // <= directory to compare device snapshots to
 const signedPlugin = false;
 const testNetwork = "ethereum";
 
