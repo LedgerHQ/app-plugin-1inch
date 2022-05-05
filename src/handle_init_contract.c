@@ -62,7 +62,7 @@ void handle_init_contract(void *parameters) {
             context->next_param = DST_RECEIVER;
             break;
         case FILL_ORDER_RFQ:
-            context->skip = 2;
+            context->skip = 5;
             context->next_param = AMOUNT_SENT;
             break;
         case FILL_ORDER_RFQ_TO_WITH_PERMIT:
