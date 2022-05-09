@@ -12,10 +12,11 @@ mkdir -p elfs
 cd ..
 
 echo "*Building elfs for Nano S..."
+export BOLOS_SDK="$NANOS_SDK"
 
 echo "**Building app-1inch for Nano S..."
-make clean BOLOS_SDK=$NANOS_SDK
-make -j DEBUG=1 BOLOS_SDK=$NANOS_SDK
+make clean
+make -j DEBUG=1
 cp bin/app.elf "tests/elfs/1inch_nanos.elf"
 
 echo "**Building app-ethereum for Nano S..."
@@ -27,10 +28,11 @@ cp "${APP_ETHEREUM}/bin/app.elf" "tests/elfs/ethereum_nanos.elf"
 
 
 echo "*Building elfs for Nano X..."
+export BOLOS_SDK="$NANOX_SDK"
 
 echo "**Building app-1inch for Nano X..."
-make clean BOLOS_SDK=$NANOX_SDK
-make -j DEBUG=1 BOLOS_SDK=$NANOX_SDK
+make clean
+make -j DEBUG=1
 cp bin/app.elf "tests/elfs/1inch_nanox.elf"
 
 echo "**Building app-ethereum for Nano X..."
