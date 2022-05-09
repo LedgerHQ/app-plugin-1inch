@@ -8,53 +8,59 @@ This is a plugin for the Ethereum application which helps parsing and displaying
 
 ## Prerequisite
 
-Be sure to have your environment correctly set up (see [Getting Started](https://ledger.readthedocs.io/en/latest/userspace/getting_started.html)) and [ledgerblue](https://pypi.org/project/ledgerblue/) and installed.
-
-If you want to benefit from [vscode](https://code.visualstudio.com/) integration, it's recommended to move the toolchain in `/opt` and set `BOLOS_ENV` environment variable as follows
+Clone the plugin to a new folder.
 
 ```shell
-BOLOS_ENV=/opt/bolos-devenv
+git clone https://github.com/blooo-io/app-plugin-1inch.git
 ```
 
-and do the same with `BOLOS_SDK` environment variable
+Then in the same folder clone two more repositories, which is the plugin-tools and app-ethereum.
 
 ```shell
-BOLOS_SDK=/opt/nanos-secure-sdk
+git clone https://github.com/LedgerHQ/plugin-tools.git                          #plugin-tools
+git clone --recurse-submodules https://github.com/LedgerHQ/app-ethereum.git     #app-ethereum
 ```
-
 ## Documentation
 
 Need more information about the interface, the architecture, or general stuff about ethereum plugins? You can find more about them in the [ethereum-app documentation](https://github.com/LedgerHQ/app-ethereum/blob/master/doc/ethapp_plugins.asc).
 
-## Compilation
+## Smart Contracts
 
+Smart contracts covered by this plugin are:
+
+| Network | Version | Smart Contract |
+| ---       | --- | --- |
+| Ethereum  | V3  | `0x11111112542D85B3EF69AE05771c2dCCff4fAa26`|
+| Ethereum  | V4  | `0x1111111254fb6c44bAC0beD2854e76F90643097d`|
+| Polygon   | V3  | `0x11111112542D85B3EF69AE05771c2dCCff4fAa26`|
+| Polygon   | V4  | `0x1111111254fb6c44bAC0beD2854e76F90643097d`|
+
+
+## Build
+
+Go to the plugin-tools folder and run the "./start" script.
 ```shell
-make SPECULOS=1  # compile optionally with PRINTF
-make load     # load the app on the Nano using ledgerblue
+cd plugin-tools  # go to plugin folder
+./start.sh       # run the script start.sh
+```
+The script will build a docker image and attach a console.
+When the docker image is running go to the "app-plugin-1inch" folder and build the ".elf" files.
+```shell
+cd app-plugin-1inch/tests       # go to the tests folder in app-plugin-1inch
+./build_local_test_elfs.sh      # run the script build_local_test_elfs.sh
 ```
 
-This plugin uses the [ethereum-plugin-sdk](https://github.com/LedgerHQ/ethereum-plugin-sdk/). If there's an error while building, try running `git pull --recurse-submodules` in order to update the sdk. If this fixes your bug, please file an issue or create a PR to add the new sdk version :)
+## Tests
 
-If you need to update the sdk, you will need to do it locally and create a PR on the [ethereum-plugin-sdk repo](https://github.com/LedgerHQ/ethereum-plugin-sdk/).
+To test the plugin go to the tests folder from the "app-plugin-1inch" and run the script "test"
+```shell
+cd app-plugin-1inch/tests       # go to the tests folder in app-plugin-1inch
+yarn test                       # run the script test
+```
+## Continuous Integration
 
-## Tests & Continuous Integration
 
 The flow processed in [GitHub Actions](https://github.com/features/actions) is the following:
 
 - Code formatting with [clang-format](http://clang.llvm.org/docs/ClangFormat.html)
 - Compilation of the application for Ledger Nano S in [ledger-app-builder](https://github.com/LedgerHQ/ledger-app-builder)
-
-## Local development
-
-How to Make:
-
-1) Clone app-builder docker image: <https://github.com/LedgerHQ/ledger-app-builder>
-2) Go to repo dir that you just clone `cd ledger-app-builder`
-3) Build it, with specific image name `docker build . -t ledger-app-builder`
-4) Launch ledger-app-builder container
-
-    ```shell
-    docker run --rm -it -v ~/path-to/app-plugin-1inch:/app ledger-app-builder
-    ```
-
-5) Call `make SPECULOS=1` with in container
