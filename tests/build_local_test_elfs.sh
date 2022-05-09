@@ -3,6 +3,7 @@
 # FILL THESE WITH YOUR OWN SDKs PATHS and APP-ETHEREUM's ROOT
 NANOS_SDK=$NANOS_SDK
 NANOX_SDK=$NANOX_SDK
+NANOSP_SDK=$NANOSP_SDK
 APP_ETHEREUM=/plugin_dev/app-ethereum
 
 # create elfs folder if it doesn't exist
@@ -41,5 +42,21 @@ make clean BOLOS_SDK=$NANOX_SDK
 make -j DEBUG=1 BOLOS_SDK=$NANOX_SDK CHAIN=ethereum BYPASS_SIGNATURES=1 ALLOW_DATA=1
 cd -
 cp "${APP_ETHEREUM}/bin/app.elf" "tests/elfs/ethereum_nanox.elf"
+
+
+echo "*Building elfs for Nano X..."
+export BOLOS_SDK="$NANOSP_SDK"
+
+echo "**Building app-1inch for Nano S+..."
+make clean
+make -j DEBUG=1
+cp bin/app.elf "tests/elfs/1inch_nanosp.elf"
+
+echo "**Building app-ethereum for Nano S+..."
+cd $APP_ETHEREUM
+make clean BOLOS_SDK=$NANOSP_SDK
+make -j DEBUG=1 BOLOS_SDK=$NANOSP_SDK CHAIN=ethereum BYPASS_SIGNATURES=1 ALLOW_DATA=1
+cd -
+cp "${APP_ETHEREUM}/bin/app.elf" "tests/elfs/ethereum_nanosp.elf"
 
 echo "done"

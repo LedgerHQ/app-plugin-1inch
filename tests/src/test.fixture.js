@@ -23,9 +23,11 @@ const Resolve = require('path').resolve;
 
 const APP_PATH_NANOS = Resolve('elfs/ethereum_nanos.elf');
 const APP_PATH_NANOX = Resolve('elfs/ethereum_nanox.elf');
+const APP_PATH_NANOSP = Resolve('elfs/ethereum_nanosp.elf');
 
 const PLUGIN_LIB_NANOS = { '1inch': Resolve('elfs/1inch_nanos.elf') };
 const PLUGIN_LIB_NANOX = { '1inch': Resolve('elfs/1inch_nanox.elf') };
+const PLUGIN_LIB_NANOSP = { '1inch': Resolve('elfs/1inch_nanosp.elf') };
 
 const RANDOM_ADDRESS = "0xaaaabbbbccccddddeeeeffffgggghhhhiiiijjjj";
 
@@ -94,10 +96,14 @@ function zemu(device, func, testNetwork, signed = false) {
         eth_path = APP_PATH_NANOS;
         plugin = PLUGIN_LIB_NANOS;
         sim_options.model = "nanos";
-      } else {
+      } else if (device === "nanox") {
         eth_path = APP_PATH_NANOX;
         plugin = PLUGIN_LIB_NANOX;
         sim_options.model = "nanox";
+      }else {
+        eth_path = APP_PATH_NANOSP;
+        plugin = PLUGIN_LIB_NANOSP;
+        sim_options.model = "nanosp";
       }
   
       const sim = new Zemu(eth_path, plugin);
