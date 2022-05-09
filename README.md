@@ -1,3 +1,7 @@
+# Badges
+[![Code style check](https://github.com/blooo-io/app-plugin-1inch/actions/workflows/lint-workflow.yml/badge.svg)](https://github.com/blooo-io/app-plugin-1inch/actions/workflows/lint-workflow.yml)
+[![Compilation & tests](https://github.com/blooo-io/app-plugin-1inch/actions/workflows/ci-workflow.yml/badge.svg)](https://github.com/blooo-io/app-plugin-1inch/actions/workflows/ci-workflow.yml)
+
 # Ledger 1inch Plugin
 
 This is a plugin for the Ethereum application which helps parsing and displaying relevant information when signing a 1inch transaction.
