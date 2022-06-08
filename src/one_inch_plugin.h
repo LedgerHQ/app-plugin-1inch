@@ -10,7 +10,7 @@
 
 #define RUN_APPLICATION 1
 
-#define NUM_ONE_INCH_SELECTORS 2
+#define NUM_ONE_INCH_SELECTORS 10
 #define SELECTOR_SIZE          4
 
 #define PLUGIN_NAME "1inch"
@@ -33,15 +33,25 @@ extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
 typedef enum {
     SWAP,
     UNOSWAP,
+    UNISWAP_V3_SWAP,
+    UNISWAP_V3_SWAP_TO,
+    UNISWAP_V3_SWAP_TO_WITH_PERMIT,
+    UNOSWAP_WITH_PERMIT,
+    CLIPPER_SWAP,
+    CLIPPER_SWAP_TO_WITH_PERMIT,
+    FILL_ORDER_RFQ,
+    FILL_ORDER_RFQ_TO_WITH_PERMIT,
 } oneInchSelector_t;
 
 #define PARTIAL_FILL 1
+extern const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS];
 
 typedef enum {
     SEND_SCREEN,
     RECEIVE_SCREEN,
     BENEFICIARY_SCREEN,
     PARTIAL_FILL_SCREEN,
+    WARN_SCREEN,
     ERROR,
 } screens_t;
 
@@ -99,6 +109,10 @@ typedef struct one_inch_parameters_t {
 void handle_provide_parameter(void *parameters);
 void handle_query_contract_ui(void *parameters);
 void one_inch_plugin_call(int message, void *parameters);
+void handle_finalize(void *parameters);
+void handle_init_contract(void *parameters);
+void handle_provide_token(void *parameters);
+void handle_query_contract_id(void *parameters);
 
 static inline void printf_hex_array(const char *title __attribute__((unused)),
                                     size_t len __attribute__((unused)),
