@@ -45,6 +45,7 @@ jobs:
 
       - name: Build with Clang Static Analyzer
         run: |
+          git config --global --add safe.directory /__w/app-plugin-1inch/app-plugin-1inch
           make clean
           scan-build --use-cc=clang -analyze-headers -enable-checker security -enable-checker unix -enable-checker valist -o scan-build --status-bugs make default
       - uses: actions/upload-artifact@v2
