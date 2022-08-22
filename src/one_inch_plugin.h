@@ -3,7 +3,6 @@
 #include <string.h>
 #include "eth_internals.h"
 #include "eth_plugin_interface.h"
-#include "debug_write.h"
 
 #define PARAMETER_LENGTH 32
 #define SELECTOR_SIZE    4
@@ -105,6 +104,10 @@ typedef struct one_inch_parameters_t {
     uint8_t skip;
     // 4 * 1 + 2 * 2 + 7 * 1 == 8 + 7 == 15 bytes. There are 16 - 15 == 1 byte left.
 } one_inch_parameters_t;
+
+// Piece of code that will check that the above structure is not bigger than 5 * 32.
+// Do not remove this check.
+_Static_assert(sizeof(one_inch_parameters_t) <= 5 * 32, "Structure of parameters too big.");
 
 void handle_provide_parameter(void *parameters);
 void handle_query_contract_ui(void *parameters);
