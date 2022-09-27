@@ -26,6 +26,33 @@
 
 #include "one_inch_plugin.h"
 
+void one_inch_plugin_call(int message, void *parameters) {
+    PRINTF("Handling message %d\n", message);
+    switch (message) {
+        case ETH_PLUGIN_INIT_CONTRACT:
+            handle_init_contract(parameters);
+            break;
+        case ETH_PLUGIN_PROVIDE_PARAMETER:
+            handle_provide_parameter(parameters);
+            break;
+        case ETH_PLUGIN_FINALIZE:
+            handle_finalize(parameters);
+            break;
+        case ETH_PLUGIN_PROVIDE_INFO:
+            handle_provide_token(parameters);
+            break;
+        case ETH_PLUGIN_QUERY_CONTRACT_ID:
+            handle_query_contract_id(parameters);
+            break;
+        case ETH_PLUGIN_QUERY_CONTRACT_UI:
+            handle_query_contract_ui(parameters);
+            break;
+        default:
+            PRINTF("Unhandled message %d\n", message);
+            break;
+    }
+}
+
 void call_app_ethereum() {
     unsigned int libcall_params[3];
     libcall_params[0] = (unsigned int) "Ethereum";

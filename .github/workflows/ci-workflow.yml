@@ -11,8 +11,8 @@ on:
       - develop
 
 jobs:
-  job_build_debug_nano_s:
-    name: Build debug Nano S
+  job_build_debug:
+    name: Build debug
     runs-on: ubuntu-latest
 
     container:
@@ -24,43 +24,19 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Build plugin for Nano S
+      - name: Build 1inch plugin
         run: |
-          make BOLOS_SDK=$NANOS_SDK DEBUG=1
-          mv bin/app.elf plugin_nanos.elf
+          make DEBUG=1
 
-      - name: Upload plugin artifact for Nano S
+      - name: Upload 1inch binary
         uses: actions/upload-artifact@v2
         with:
-          name: plugin-artifacts
-          path: ./plugin_nanos.elf
-
-  job_build_debug_nano_x:
-    name: Build debug Nano X
-    runs-on: ubuntu-latest
-
-    container:
-      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
-
-    steps:
-      - name: Clone
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
-
-      - name: Build plugin for Nano X
-        run: |
-          make BOLOS_SDK=$NANOX_SDK DEBUG=1
-          mv bin/app.elf plugin_nanox.elf
-
-      - name: Upload plugin artifact for Nano X
-        uses: actions/upload-artifact@v2
-        with:
-          name: plugin-artifacts
-          path: ./plugin_nanox.elf
+          name: 1inch-app-debug
+          path: bin
 
   job_scan_build:
     name: Clang Static Analyzer
+    needs: job_build_debug
     runs-on: ubuntu-latest
 
     container:
@@ -71,6 +47,7 @@ jobs:
 
       - name: Build with Clang Static Analyzer
         run: |
+          git config --global --add safe.directory /__w/app-plugin-1inch/app-plugin-1inch
           make clean
           scan-build --use-cc=clang -analyze-headers -enable-checker security -enable-checker unix -enable-checker valist -o scan-build --status-bugs make default
       - uses: actions/upload-artifact@v2
@@ -81,6 +58,7 @@ jobs:
 
   job_coverity_scan:
     name: Coverity Scan
+    needs: job_build_debug
     runs-on: ubuntu-latest
 
     container:
@@ -106,9 +84,112 @@ jobs:
         env:
           EMAIL: ${{ secrets.COVERITY_SCAN_EMAIL }}
           TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
+  job_build_debug_nano_s:
+    name: Build debug Nano S
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
+    steps:
+      - name: Clone
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Build plugin for Nano S
+        run: |
+          make clean
+          make BOLOS_SDK=$NANOS_SDK
+      - name: Move binary to test directory
+        run: |
+          mkdir -p ./tests/elfs/
+          mv bin/app.elf ./tests/elfs/1inch_nanos.elf
+      - name: Upload plugin binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: binaries
+          path: tests/elfs/1inch_nanos.elf
+
+  job_build_debug_nano_x:
+    name: Build debug Nano X
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
+    steps:
+      - name: Clone
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Build plugin for Nano X
+        run: |
+          make clean
+          make BOLOS_SDK=$NANOX_SDK
+      - name: Move binary to test directory
+        run: |
+          mkdir -p ./tests/elfs/
+          mv bin/app.elf ./tests/elfs/1inch_nanox.elf
+      - name: Upload plugin binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: binaries
+          path: tests/elfs/1inch_nanox.elf
+
+  job_build_ethereum_nano_s:
+    name: Build Ethereum application for Nano S testing
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
+    steps:
+      - name: Checkout app-ethereum
+        uses: actions/checkout@v2
+        with:
+          repository: LedgerHQ/app-ethereum
+          ref: ${{ ((github.base_ref || github.ref_name) == 'main' && 'master') || (github.base_ref || github.ref_name) }}
+          submodules: recursive
+      - name: Build ethereum
+        run: |
+          make clean
+          make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOS_SDK CHAIN=ethereum ALLOW_DATA=1
+      - name: Move binary to test directory
+        run: |
+          mkdir -p ./tests/elfs/
+          mv bin/app.elf ./tests/elfs/ethereum_nanos.elf
+      - name: Upload plugin binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: binaries
+          path: tests/elfs/ethereum_nanos.elf
+
+  job_build_ethereum_nano_x:
+    name: Build Ethereum application for Nano X testing
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
+    steps:
+      - name: Checkout app-ethereum
+        uses: actions/checkout@v2
+        with:
+          repository: LedgerHQ/app-ethereum
+          ref: ${{ ((github.base_ref || github.ref_name) == 'main' && 'master') || (github.base_ref || github.ref_name) }}
+          submodules: recursive
+      - name: Build ethereum
+        run: |
+          make clean
+          make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOX_SDK CHAIN=ethereum ALLOW_DATA=1
+      - name: Move binary to test directory
+        run: |
+          mkdir -p ./tests/elfs/
+          mv bin/app.elf ./tests/elfs/ethereum_nanox.elf
+      - name: Upload plugin binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: binaries
+          path: tests/elfs/ethereum_nanox.elf
 
   jobs-e2e-tests:
-    needs: [job_build_debug_nano_s, job_build_debug_nano_x]
+    needs:
+      - job_build_debug_nano_s
+      - job_build_debug_nano_x
+      - job_build_ethereum_nano_s
+      - job_build_ethereum_nano_x
     runs-on: ubuntu-latest
     steps:
       - name: Test
@@ -118,23 +199,24 @@ jobs:
           echo $DISPLAY
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Download built binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: binaries
+          path: tests/elfs/
+      - name: Check downloaded binaries
+        run: ls -lh ./tests/elfs
+      - run: sudo apt-get update -y && sudo apt-get install -y libusb-1.0.0 libudev-dev
       - name: Install node
         uses: actions/setup-node@v2
         with:
-          node-version: "14.4.0"
+          node-version: "16.4.0"
       - name: Install yarn
         run: |
           npm install -g yarn
       - name: Build/Install build js deps
         run: |
           cd tests && yarn install
-      - name: Download plugin artifacts
-        uses: actions/download-artifact@v2
-        with:
-            path: tests/elfs
-      - name: Copy plugin artifacts
-        run: |
-            mv tests/elfs/plugin-artifacts/*.elf tests/elfs
       - name: Run zemu tests
         run: |
           cd tests && yarn test

@@ -3,14 +3,13 @@
 #include <string.h>
 #include "eth_internals.h"
 #include "eth_plugin_interface.h"
-#include "debug_write.h"
 
 #define PARAMETER_LENGTH 32
 #define SELECTOR_SIZE    4
 
 #define RUN_APPLICATION 1
 
-#define NUM_ONE_INCH_SELECTORS 2
+#define NUM_ONE_INCH_SELECTORS 10
 #define SELECTOR_SIZE          4
 
 #define PLUGIN_NAME "1inch"
@@ -33,15 +32,25 @@ extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
 typedef enum {
     SWAP,
     UNOSWAP,
+    UNISWAP_V3_SWAP,
+    UNISWAP_V3_SWAP_TO,
+    UNISWAP_V3_SWAP_TO_WITH_PERMIT,
+    UNOSWAP_WITH_PERMIT,
+    CLIPPER_SWAP,
+    CLIPPER_SWAP_TO_WITH_PERMIT,
+    FILL_ORDER_RFQ,
+    FILL_ORDER_RFQ_TO_WITH_PERMIT,
 } oneInchSelector_t;
 
 #define PARTIAL_FILL 1
+extern const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS];
 
 typedef enum {
     SEND_SCREEN,
     RECEIVE_SCREEN,
     BENEFICIARY_SCREEN,
     PARTIAL_FILL_SCREEN,
+    WARN_SCREEN,
     ERROR,
 } screens_t;
 
@@ -96,9 +105,17 @@ typedef struct one_inch_parameters_t {
     // 4 * 1 + 2 * 2 + 7 * 1 == 8 + 7 == 15 bytes. There are 16 - 15 == 1 byte left.
 } one_inch_parameters_t;
 
+// Piece of code that will check that the above structure is not bigger than 5 * 32.
+// Do not remove this check.
+_Static_assert(sizeof(one_inch_parameters_t) <= 5 * 32, "Structure of parameters too big.");
+
 void handle_provide_parameter(void *parameters);
 void handle_query_contract_ui(void *parameters);
 void one_inch_plugin_call(int message, void *parameters);
+void handle_finalize(void *parameters);
+void handle_init_contract(void *parameters);
+void handle_provide_token(void *parameters);
+void handle_query_contract_id(void *parameters);
 
 static inline void printf_hex_array(const char *title __attribute__((unused)),
                                     size_t len __attribute__((unused)),
