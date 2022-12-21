@@ -38,6 +38,9 @@ static const uint8_t ONE_INCH_FILL_ORDER_RFQ_TO_WITH_PERMIT_SELECTOR[SELECTOR_SI
                                                                                        0xa2,
                                                                                        0x7b};
 
+// swap 0x12aa3caf
+static const uint8_t ONE_INCH_SWAP_SELECTOR_V5[SELECTOR_SIZE] = {0x12, 0xaa, 0x3c, 0xaf};
+
 // Array of all the different 1inch selectors.
 const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS] = {
     ONE_INCH_SWAP_SELECTOR,
@@ -50,6 +53,7 @@ const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS] = {
     ONE_INCH_CLIPPER_SWAP_TO_WITH_PERMIT_SELECTOR,
     ONE_INCH_FILL_ORDER_RFQ_SELECTOR,
     ONE_INCH_FILL_ORDER_RFQ_TO_WITH_PERMIT_SELECTOR,
+    ONE_INCH_SWAP_SELECTOR_V5,
 };
 
 // 1inch uses `0xeeeee` as a dummy address to represent ETH.

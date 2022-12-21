@@ -5,7 +5,7 @@ bin/
 debug/
 dep/
 obj/
-tests/elfs/plugin_nano*.elf
+tests/elfs/
 
 # Editors
 .idea/
