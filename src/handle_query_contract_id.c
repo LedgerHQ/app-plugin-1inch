@@ -8,6 +8,7 @@ void handle_query_contract_id(void *parameters) {
 
     switch (context->selectorIndex) {
         case SWAP:
+        case SWAP_V5:
             strlcpy(msg->version, "Swap", msg->versionLength);
             break;
         case UNOSWAP:

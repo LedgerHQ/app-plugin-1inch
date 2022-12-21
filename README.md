@@ -32,8 +32,10 @@ Smart contracts covered by this plugin are:
 | ---       | --- | --- |
 | Ethereum  | V3  | `0x11111112542D85B3EF69AE05771c2dCCff4fAa26`|
 | Ethereum  | V4  | `0x1111111254fb6c44bAC0beD2854e76F90643097d`|
+| Ethereum  | V5  | `0x1111111254eeb25477b68fb85ed929f73a960582`|
 | Polygon   | V3  | `0x11111112542D85B3EF69AE05771c2dCCff4fAa26`|
 | Polygon   | V4  | `0x1111111254fb6c44bAC0beD2854e76F90643097d`|
+| Polygon   | V5  | `0x1111111254eeb25477b68fb85ed929f73a960582`|
 
 
 ## Build

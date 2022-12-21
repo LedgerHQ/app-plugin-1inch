@@ -4,6 +4,7 @@
 static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP:
+        case SWAP_V5:
         case UNOSWAP:
         case UNISWAP_V3_SWAP:
         case UNISWAP_V3_SWAP_TO:
@@ -42,6 +43,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
 static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP:
+        case SWAP_V5:
         case UNOSWAP:
         case UNISWAP_V3_SWAP:
         case UNISWAP_V3_SWAP_TO:

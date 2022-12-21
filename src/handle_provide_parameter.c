@@ -350,7 +350,8 @@ void handle_provide_parameter(void *parameters) {
                 handle_unoswap(msg, context);
                 break;
             }
-            case SWAP: {
+            case SWAP:
+            case SWAP_V5: {
                 handle_swap(msg, context);
                 break;
             }

@@ -1,6 +1,7 @@
 name: Compilation & tests
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -62,13 +63,14 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-scanner:latest
+      image: ghcr.io/blooo-io/ledger-app-builder/ledger-app-scanner:master
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Build with cov-build
         run: |
+          git config --global --add safe.directory /__w/app-plugin-1inch/app-plugin-1inch
           make clean
           cov-build --dir cov-int make default
       - name: Submit the result to Coverity Scan
@@ -79,11 +81,12 @@ jobs:
             --form email=$EMAIL \
             --form file=@cov-int.tar.gz \
             --form version=master \
-            --form description="1inch Plugin" \
-            https://scan.coverity.com/builds?project=LedgerHQ%2Fapp-plugin-1inch
+            --form description="Plugin" \
+            https://scan.coverity.com/builds?project=app-plugin-1inch
         env:
           EMAIL: ${{ secrets.COVERITY_SCAN_EMAIL }}
           TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
+
   job_build_debug_nano_s:
     name: Build debug Nano S
     runs-on: ubuntu-latest
@@ -96,6 +99,7 @@ jobs:
           submodules: recursive
       - name: Build plugin for Nano S
         run: |
+          git config --global --add safe.directory /__w/app-plugin-1inch/app-plugin-1inch
           make clean
           make BOLOS_SDK=$NANOS_SDK
       - name: Move binary to test directory
@@ -120,6 +124,7 @@ jobs:
           submodules: recursive
       - name: Build plugin for Nano X
         run: |
+          git config --global --add safe.directory /__w/app-plugin-1inch/app-plugin-1inch
           make clean
           make BOLOS_SDK=$NANOX_SDK
       - name: Move binary to test directory
@@ -131,6 +136,31 @@ jobs:
         with:
           name: binaries
           path: tests/elfs/1inch_nanox.elf
+
+  job_build_debug_nano_sp:
+    name: Build debug Nano S+
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
+    steps:
+      - name: Clone
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Build plugin for Nano S+
+        run: |
+          git config --global --add safe.directory /__w/app-plugin-1inch/app-plugin-1inch
+          make clean
+          make BOLOS_SDK=$NANOSP_SDK
+      - name: Move binary to test directory
+        run: |
+          mkdir -p ./tests/elfs/
+          mv bin/app.elf ./tests/elfs/1inch_nanosp.elf
+      - name: Upload plugin binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: binaries
+          path: tests/elfs/1inch_nanosp.elf
 
   job_build_ethereum_nano_s:
     name: Build Ethereum application for Nano S testing
@@ -146,6 +176,7 @@ jobs:
           submodules: recursive
       - name: Build ethereum
         run: |
+          git config --global --add safe.directory /__w/app-plugin-1inch/app-plugin-1inch
           make clean
           make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOS_SDK CHAIN=ethereum ALLOW_DATA=1
       - name: Move binary to test directory
@@ -172,6 +203,7 @@ jobs:
           submodules: recursive
       - name: Build ethereum
         run: |
+          git config --global --add safe.directory /__w/app-plugin-1inch/app-plugin-1inch
           make clean
           make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOX_SDK CHAIN=ethereum ALLOW_DATA=1
       - name: Move binary to test directory
@@ -184,12 +216,41 @@ jobs:
           name: binaries
           path: tests/elfs/ethereum_nanox.elf
 
+  job_build_ethereum_nano_sp:
+    name: Build Ethereum application for Nano S+ testing
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
+    steps:
+      - name: Checkout app-ethereum
+        uses: actions/checkout@v2
+        with:
+          repository: LedgerHQ/app-ethereum
+          ref: ${{ ((github.base_ref || github.ref_name) == 'main' && 'master') || (github.base_ref || github.ref_name) }}
+          submodules: recursive
+      - name: Build ethereum
+        run: |
+          git config --global --add safe.directory /__w/app-plugin-1inch/app-plugin-1inch
+          make clean
+          make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOSP_SDK CHAIN=ethereum ALLOW_DATA=1
+      - name: Move binary to test directory
+        run: |
+          mkdir -p ./tests/elfs/
+          mv bin/app.elf ./tests/elfs/ethereum_nanosp.elf
+      - name: Upload plugin binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: binaries
+          path: tests/elfs/ethereum_nanosp.elf
+
   jobs-e2e-tests:
     needs:
       - job_build_debug_nano_s
       - job_build_debug_nano_x
+      - job_build_debug_nano_sp
       - job_build_ethereum_nano_s
       - job_build_ethereum_nano_x
+      - job_build_ethereum_nano_sp
     runs-on: ubuntu-latest
     steps:
       - name: Test
@@ -210,7 +271,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v2
         with:
-          node-version: "16.4.0"
+          node-version: "18.12.1"
       - name: Install yarn
         run: |
           npm install -g yarn
