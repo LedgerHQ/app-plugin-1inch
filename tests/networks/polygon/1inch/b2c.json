@@ -116,6 +116,14 @@
                     ],
                     "method": "clipperSwapToWithPermit",
                     "plugin": "1inch"
+                },
+                "0x70ccbd31": {
+                    "erc20OfInterest": [
+                        "order.makerAsset",
+                        "order.takerAsset"
+                    ],
+                    "method": "fillOrderRFQToWithPermit",
+                    "plugin": "1inch"
                 }
             }
         }

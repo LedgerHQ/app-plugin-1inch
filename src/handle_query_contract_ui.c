@@ -20,6 +20,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
             break;
         case FILL_ORDER_RFQ:
         case FILL_ORDER_RFQ_TO_WITH_PERMIT:
+        case FILL_ORDER_RFQ_TO_WITH_PERMIT_V5:
             strlcpy(msg->title, "Making", msg->titleLength);
             break;
         default:
@@ -63,6 +64,7 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
             break;
         case FILL_ORDER_RFQ:
         case FILL_ORDER_RFQ_TO_WITH_PERMIT:
+        case FILL_ORDER_RFQ_TO_WITH_PERMIT_V5:
             strlcpy(msg->title, "Taking", msg->titleLength);
             break;
         default:
