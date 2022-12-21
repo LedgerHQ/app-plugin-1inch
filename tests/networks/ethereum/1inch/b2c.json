@@ -133,6 +133,14 @@
                     "method": "clipperSwapToWithPermit",
                     "plugin": "1inch"
                 },
+                "0x3eca9c0a": {
+                    "erc20OfInterest": [
+                        "order.makerAsset",
+                        "order.takerAsset"
+                    ],
+                    "method": "fillOrderRFQ",
+                    "plugin": "1inch"
+                },
                 "0x70ccbd31": {
                     "erc20OfInterest": [
                         "order.makerAsset",

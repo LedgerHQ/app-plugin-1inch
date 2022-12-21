@@ -423,6 +423,7 @@ void handle_provide_parameter(void *parameters) {
                 handle_fill_order_rfq_to_with_permit(msg, context);
                 break;
             }
+            case FILL_ORDER_RFQ_V5:
             case FILL_ORDER_RFQ_TO_WITH_PERMIT_V5: {
                 handle_fill_order_rfq_to_with_permit_v5(msg, context);
                 break;

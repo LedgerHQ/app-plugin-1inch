@@ -39,6 +39,7 @@ void handle_query_contract_id(void *parameters) {
             strlcpy(msg->version, "Clipper Swap To With Permit", msg->versionLength);
             break;
         case FILL_ORDER_RFQ:
+        case FILL_ORDER_RFQ_V5:
             strlcpy(msg->version, "Fill Order RFQ", msg->versionLength);
             break;
         case FILL_ORDER_RFQ_TO_WITH_PERMIT:
