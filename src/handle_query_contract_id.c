@@ -12,6 +12,7 @@ void handle_query_contract_id(void *parameters) {
             strlcpy(msg->version, "Swap", msg->versionLength);
             break;
         case UNOSWAP:
+        case UNOSWAP_V5:
             strlcpy(msg->version, "Unoswap", msg->versionLength);
             break;
         case UNISWAP_V3_SWAP:

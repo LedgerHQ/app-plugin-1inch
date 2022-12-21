@@ -102,6 +102,13 @@
                     ],
                     "method": "swap",
                     "plugin": "1inch"
+                },
+                "0x0502b1c5": {
+                    "erc20OfInterest": [
+                        "srcToken"
+                    ],
+                    "method": "unoswap",
+                    "plugin": "1inch"
                 }
             }
         }

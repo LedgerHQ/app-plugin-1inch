@@ -41,30 +41,20 @@ void handle_init_contract(void *parameters) {
             context->next_param = TOKEN_SENT;
             break;
         case UNOSWAP:
+        case UNOSWAP_V5:
+        case CLIPPER_SWAP:
+        case UNOSWAP_WITH_PERMIT:
             context->next_param = TOKEN_SENT;
             break;
         case UNISWAP_V3_SWAP:
             context->next_param = AMOUNT_SENT;
             break;
         case UNISWAP_V3_SWAP_TO:
-            context->next_param = DST_RECEIVER;
-            break;
         case UNISWAP_V3_SWAP_TO_WITH_PERMIT:
-            context->next_param = DST_RECEIVER;
-            break;
-        case UNOSWAP_WITH_PERMIT:
-            context->next_param = TOKEN_SENT;
-            break;
-        case CLIPPER_SWAP:
-            context->next_param = TOKEN_SENT;
-            break;
         case CLIPPER_SWAP_TO_WITH_PERMIT:
             context->next_param = DST_RECEIVER;
             break;
         case FILL_ORDER_RFQ:
-            context->skip = 5;
-            context->next_param = AMOUNT_SENT;
-            break;
         case FILL_ORDER_RFQ_TO_WITH_PERMIT:
             context->skip = 5;
             context->next_param = AMOUNT_SENT;

@@ -346,7 +346,8 @@ void handle_provide_parameter(void *parameters) {
 
         context->offset = 0;  // Reset offset
         switch (context->selectorIndex) {
-            case UNOSWAP: {
+            case UNOSWAP:
+            case UNOSWAP_V5: {
                 handle_unoswap(msg, context);
                 break;
             }
