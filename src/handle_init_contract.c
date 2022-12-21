@@ -51,6 +51,7 @@ void handle_init_contract(void *parameters) {
             break;
         case UNISWAP_V3_SWAP_TO:
         case UNISWAP_V3_SWAP_TO_WITH_PERMIT:
+        case UNOSWAP_TO_WITH_PERMIT_V5:
         case CLIPPER_SWAP_TO_WITH_PERMIT:
             context->next_param = DST_RECEIVER;
             break;

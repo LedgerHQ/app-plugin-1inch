@@ -364,7 +364,8 @@ void handle_provide_parameter(void *parameters) {
                 handle_uniswap_v3_swap_to(msg, context);
                 break;
             }
-            case UNISWAP_V3_SWAP_TO_WITH_PERMIT: {
+            case UNISWAP_V3_SWAP_TO_WITH_PERMIT:
+            case UNOSWAP_TO_WITH_PERMIT_V5: {
                 handle_uniswap_v3_swap_to_with_permit(msg, context);
                 break;
             }
