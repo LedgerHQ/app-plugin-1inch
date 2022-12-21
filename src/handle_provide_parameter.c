@@ -374,12 +374,12 @@ void handle_provide_parameter(void *parameters) {
                 break;
             }
             case CLIPPER_SWAP:
-            case CLIPPER_SWAP_V5:
-            case CLIPPER_SWAP_TO_WITH_PERMIT_V5: {
+            case CLIPPER_SWAP_V5:{
                 handle_clipper_swap(msg, context);
                 break;
             }
-            case CLIPPER_SWAP_TO_WITH_PERMIT: {
+            case CLIPPER_SWAP_TO_WITH_PERMIT:
+            case CLIPPER_SWAP_TO_WITH_PERMIT_V5: {
                 handle_clipper_to_with_permit_swap(msg, context);
                 break;
             }

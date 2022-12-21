@@ -108,6 +108,14 @@
                     ],
                     "method": "clipperSwap",
                     "plugin": "1inch"
+                },
+                "0xc805a666": {
+                    "erc20OfInterest": [
+                        "srcToken",
+                        "dstToken"
+                    ],
+                    "method": "clipperSwapToWithPermit",
+                    "plugin": "1inch"
                 }
             }
         }
