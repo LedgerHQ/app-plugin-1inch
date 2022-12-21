@@ -45,7 +45,10 @@ static const uint8_t ONE_INCH_SWAP_SELECTOR_V5[SELECTOR_SIZE] = {0x12, 0xaa, 0x3
 static const uint8_t ONE_INCH_UNOSWAP_SELECTOR_V5[SELECTOR_SIZE] = {0x05, 0x02, 0xb1, 0xc5};
 
 // unoswapToWithPermit 0x3c15fd91
-static const uint8_t ONE_INCH_UNOSWAP_TO_WITH_PERMIT_SELECTOR_V5[SELECTOR_SIZE] = {0x3c, 0x15, 0xfd, 0x91};
+static const uint8_t ONE_INCH_UNOSWAP_TO_WITH_PERMIT_SELECTOR_V5[SELECTOR_SIZE] = {0x3c,
+                                                                                   0x15,
+                                                                                   0xfd,
+                                                                                   0x91};
 
 // clipperSwap 0x84bd6d29
 static const uint8_t ONE_INCH_CLIPPER_SWAP_SELECTOR_V5[SELECTOR_SIZE] = {0x84, 0xbd, 0x6d, 0x29};
