@@ -116,6 +116,14 @@
                     ],
                     "method": "unoswapToWithPermit",
                     "plugin": "1inch"
+                },
+                "0x84bd6d29": {
+                    "erc20OfInterest": [
+                        "srcToken",
+                        "dstToken"
+                    ],
+                    "method": "clipperSwap",
+                    "plugin": "1inch"
                 }
             }
         }
