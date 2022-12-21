@@ -31,6 +31,7 @@ void handle_query_contract_id(void *parameters) {
             strlcpy(msg->version, "Unoswap To With Permit", msg->versionLength);
             break;
         case CLIPPER_SWAP:
+        case CLIPPER_SWAP_V5:
             strlcpy(msg->version, "Clipper Swap", msg->versionLength);
             break;
         case CLIPPER_SWAP_TO_WITH_PERMIT:

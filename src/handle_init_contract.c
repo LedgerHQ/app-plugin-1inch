@@ -61,6 +61,7 @@ void handle_init_contract(void *parameters) {
             context->next_param = AMOUNT_SENT;
             break;
         case SWAP_V5:
+        case CLIPPER_SWAP_V5:
             context->skip = 1;
             context->next_param = TOKEN_SENT;
             break;
