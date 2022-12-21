@@ -62,6 +62,7 @@ void handle_init_contract(void *parameters) {
             break;
         case SWAP_V5:
         case CLIPPER_SWAP_V5:
+        case CLIPPER_SWAP_TO_WITH_PERMIT_V5:
             context->skip = 1;
             context->next_param = TOKEN_SENT;
             break;
