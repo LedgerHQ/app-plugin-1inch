@@ -93,6 +93,13 @@
                     ],
                     "method": "unoswap",
                     "plugin": "1inch"
+                },
+                "0x3c15fd91": {
+                    "erc20OfInterest": [
+                        "srcToken"
+                    ],
+                    "method": "unoswapToWithPermit",
+                    "plugin": "1inch"
                 }
             }
         }
