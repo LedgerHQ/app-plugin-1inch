@@ -64,6 +64,8 @@ static const uint8_t ONE_INCH_FILL_ORDER_RFQ_TO_WITH_PERMIT_SELECTOR_V5[SELECTOR
                                                                                           0xcc,
                                                                                           0xbd,
                                                                                           0x31};
+// fillOrderRFQ 0x3eca9c0a
+static const uint8_t ONE_INCH_FILL_ORDER_RFQ__SELECTOR_V5[SELECTOR_SIZE] = {0x3e,0xca,0x9c,0x0a};
 
 // Array of all the different 1inch selectors.
 const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS] = {
@@ -82,6 +84,7 @@ const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS] = {
     ONE_INCH_UNOSWAP_TO_WITH_PERMIT_SELECTOR_V5,
     ONE_INCH_CLIPPER_SWAP_SELECTOR_V5,
     ONE_INCH_CLIPPER_SWAP_TO_WITH_PERMIT_SELECTOR_V5,
+    ONE_INCH_FILL_ORDER_RFQ__SELECTOR_V5,
     ONE_INCH_FILL_ORDER_RFQ_TO_WITH_PERMIT_SELECTOR_V5,
 };
 
