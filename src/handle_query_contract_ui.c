@@ -10,6 +10,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
         case UNISWAP_V3_SWAP:
         case UNISWAP_V3_SWAP_TO:
         case UNISWAP_V3_SWAP_TO_WITH_PERMIT:
+        case UNOSWAP_TO_WITH_PERMIT_V5:
         case UNOSWAP_WITH_PERMIT:
         case CLIPPER_SWAP:
         case CLIPPER_SWAP_TO_WITH_PERMIT:
@@ -50,6 +51,7 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
         case UNISWAP_V3_SWAP:
         case UNISWAP_V3_SWAP_TO:
         case UNISWAP_V3_SWAP_TO_WITH_PERMIT:
+        case UNOSWAP_TO_WITH_PERMIT_V5:
         case UNOSWAP_WITH_PERMIT:
         case CLIPPER_SWAP:
         case CLIPPER_SWAP_TO_WITH_PERMIT:
