@@ -1,6 +1,6 @@
 import { processTest, populateTransaction } from "../../test.fixture";
 
-const contractName = "AggregationRouterV4";
+const contractName = "AggregationRouterV5";
 
 const testLabel = "swapKnownToKnownV5"; // <= Name of the test
 const testDirSuffix = "swap_known_to_known_v5"; // <= directory to compare device snapshots to
