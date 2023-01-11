@@ -1,6 +1,5 @@
 #include "one_inch_plugin.h"
 
-
 void handle_provide_token(void *parameters) {
     ethPluginProvideInfo_t *msg = (ethPluginProvideInfo_t *) parameters;
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
