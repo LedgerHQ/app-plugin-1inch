@@ -103,7 +103,6 @@ typedef struct one_inch_parameters_t {
     uint16_t checkpoint;
     uint8_t next_param;
     uint8_t tokens_found;
-    uint8_t valid;
     uint8_t decimals_sent;
     uint8_t decimals_received;
     uint8_t selectorIndex;
