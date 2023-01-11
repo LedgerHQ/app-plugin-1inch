@@ -1,15 +1,5 @@
 #include "one_inch_plugin.h"
 
-static void sent_network_token(one_inch_parameters_t *context) {
-    context->decimals_sent = WEI_TO_ETHER;
-    context->tokens_found |= TOKEN_SENT_FOUND;
-}
-
-static void received_network_token(one_inch_parameters_t *context) {
-    context->decimals_received = WEI_TO_ETHER;
-    context->tokens_found |= TOKEN_RECEIVED_FOUND;
-}
-
 void handle_finalize(void *parameters) {
     ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
