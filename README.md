@@ -32,8 +32,35 @@ Smart contracts covered by this plugin are:
 | ---       | --- | --- |
 | Ethereum  | V3  | `0x11111112542D85B3EF69AE05771c2dCCff4fAa26`|
 | Ethereum  | V4  | `0x1111111254fb6c44bAC0beD2854e76F90643097d`|
+| Ethereum  | V5  | `0x1111111254eeb25477b68fb85ed929f73a960582`|
 | Polygon   | V3  | `0x11111112542D85B3EF69AE05771c2dCCff4fAa26`|
 | Polygon   | V4  | `0x1111111254fb6c44bAC0beD2854e76F90643097d`|
+| Polygon   | V5  | `0x1111111254eeb25477b68fb85ed929f73a960582`|
+
+
+## Functions implemented:
+
+
+|    Function   | Selector  | Displayed Parameters |
+| ---           | ---       | --- |
+|Swap | 0x7c025200| <table>  <tbody>  <tr> <td><code>address desc.srcToken</code></td></tr> <tr><td><code>address desc.dstToken</code></td></tr> <tr><td><code>address desc.dstReceiver</code></td></tr> <tr><td><code>uint256 desc.amount</code></td></tr> <tr><td><code>uint256 desc.minReturnAmount</code></td></tr> <tr><td><code>uint256 desc.flags</code></td></tr> </tbody> </table> |
+|Swap (v5)| 0x12aa3caf| <table>  <tbody>  <tr> <td><code>address desc.srcToken</code></td></tr> <tr><td><code>address desc.dstToken</code></td></tr> <tr><td><code>address desc.dstReceiver</code></td></tr> <tr><td><code>uint256 desc.amount</code></td></tr> <tr><td><code>uint256 desc.minReturnAmount</code></td></tr> <tr><td><code>uint256 desc.flags</code></td></tr> </tbody> </table> |
+|Unoswap  | 0x2e95b6c8| <table>  <tbody>  <tr><td><code>address srcToken</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>uint256 minReturn</code></td></tr> </tbody> </table>|
+|Unoswap (v5) | 0x0502b1c5| <table>  <tbody>  <tr><td><code>address srcToken</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>uint256 minReturn</code></td></tr> </tbody> </table>|
+|unoswapWithPermit  | 0xa1251d75| <table>  <tbody>  <tr><td><code>address srcToken</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>uint256 minReturn</code></td></tr> </tbody> </table>|
+|unoswapToWithPermit (v5) | 0x3c15fd91| <table>  <tbody> <tr><td><code>address recipient</code></td></tr> <tr><td><code>address srcToken</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>uint256 minReturn</code></td></tr> </tbody> </table>|
+|uniswapV3Swap  | 0xe449022e| <table>  <tbody> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>uint256 minReturn</code></td></tr> </tbody> </table>|
+|uniswapV3SwapTo  | 0xbc80f1a8| <table>  <tbody> <tr><td><code>address recipient</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>uint256 minReturn</code></td></tr> </tbody> </table>|
+|uniswapV3SwapToWithPermit  | 0x2521b930| <table>  <tbody> <tr><td><code>address recipient</code></td></tr> <tr><td><code>address srcToken</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>uint256 minReturn</code></td></tr> </tbody> </table>|
+|clipperSwap  | 0xb0431182| <table>  <tbody>  <tr> <td><code>address srcToken</code></td></tr> <tr><td><code>address dstToken</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>uint256 minReturn</code></td></tr> </tbody> </table> |
+|clipperSwap (v5)  | 0x84bd6d29| <table>  <tbody>  <tr> <td><code>address srcToken</code></td></tr> <tr><td><code>address dstToken</code></td></tr> <tr><td><code>uint256 inputAmount</code></td></tr> <tr><td><code>uint256 outputAmount</code></td></tr> </tbody> </table> |
+|clipperSwapToWithPermit  | 0xd6a92a5d| <table>  <tbody>  <tr><td><code>address recipient</code></td></tr> <tr><td><code>address srcToken</code></td></tr> <tr><td><code>address dstToken</code></td></tr> <tr><td><code>uint256 amount</code></td></tr> <tr><td><code>uint256 minReturn</code></td></tr> </tbody> </table> |
+|clipperSwapToWithPermit (v5)  | 0xc805a666| <table>  <tbody>  <tr><td><code>address recipient</code></td></tr> <tr><td><code>address srcToken</code></td></tr> <tr><td><code>address dstToken</code></td></tr> <tr><td><code>uint256 inputAmount</code></td></tr> <tr><td><code>uint256 outputAmount</code></td></tr> </tbody> </table> |
+|fillOrderRFQ  | 0xd0a3b665| <table>  <tbody>  <tr><td><code>address order.makerAsset</code></td></tr> <tr><td><code>address order.takerAsset</code></td></tr> <tr><td><code>address order.maker</code></td></tr> <tr><td><code>uint256 order.makingAmount</code></td></tr> <tr><td><code>uint256 order.takingAmount</code></td></tr> </tbody> </table>|
+|fillOrderRFQ (v5)  | 0x3eca9c0a| <table>  <tbody>  <tr><td><code>address order.makerAsset</code></td></tr> <tr><td><code>address order.takerAsset</code></td></tr> <tr><td><code>address order.maker</code></td></tr> <tr><td><code>uint256 order.makingAmount</code></td></tr> <tr><td><code>uint256 order.takingAmount</code></td></tr> </tbody> </table>|
+|fillOrderRFQToWithPermit  | 0x4cc4a27b| <table>  <tbody>  <tr><td><code>address order.makerAsset</code></td></tr> <tr><td><code>address order.takerAsset</code></td></tr> <tr><td><code>address order.maker</code></td></tr> <tr><td><code>uint256 order.makingAmount</code></td></tr> <tr><td><code>uint256 order.takingAmount</code></td></tr> </tbody> </table>|
+|fillOrderRFQToWithPermit (v5)  | 0x70ccbd31| <table>  <tbody>  <tr><td><code>address order.makerAsset</code></td></tr> <tr><td><code>address order.takerAsset</code></td></tr> <tr><td><code>address order.maker</code></td></tr> <tr><td><code>uint256 order.makingAmount</code></td></tr> <tr><td><code>uint256 order.takingAmount</code></td></tr> </tbody> </table>|
+
 
 
 ## Build

@@ -9,7 +9,7 @@
 
 #define RUN_APPLICATION 1
 
-#define NUM_ONE_INCH_SELECTORS 10
+#define NUM_ONE_INCH_SELECTORS 17
 #define SELECTOR_SIZE          4
 
 #define PLUGIN_NAME "1inch"
@@ -40,6 +40,13 @@ typedef enum {
     CLIPPER_SWAP_TO_WITH_PERMIT,
     FILL_ORDER_RFQ,
     FILL_ORDER_RFQ_TO_WITH_PERMIT,
+    SWAP_V5,
+    UNOSWAP_V5,
+    UNOSWAP_TO_WITH_PERMIT_V5,
+    CLIPPER_SWAP_V5,
+    CLIPPER_SWAP_TO_WITH_PERMIT_V5,
+    FILL_ORDER_RFQ_V5,
+    FILL_ORDER_RFQ_TO_WITH_PERMIT_V5
 } oneInchSelector_t;
 
 #define PARTIAL_FILL 1
@@ -96,7 +103,6 @@ typedef struct one_inch_parameters_t {
     uint16_t checkpoint;
     uint8_t next_param;
     uint8_t tokens_found;
-    uint8_t valid;
     uint8_t decimals_sent;
     uint8_t decimals_received;
     uint8_t selectorIndex;
@@ -116,6 +122,16 @@ void handle_finalize(void *parameters);
 void handle_init_contract(void *parameters);
 void handle_provide_token(void *parameters);
 void handle_query_contract_id(void *parameters);
+
+static inline void sent_network_token(one_inch_parameters_t *context) {
+    context->decimals_sent = WEI_TO_ETHER;
+    context->tokens_found |= TOKEN_SENT_FOUND;
+}
+
+static inline void received_network_token(one_inch_parameters_t *context) {
+    context->decimals_received = WEI_TO_ETHER;
+    context->tokens_found |= TOKEN_RECEIVED_FOUND;
+}
 
 static inline void printf_hex_array(const char *title __attribute__((unused)),
                                     size_t len __attribute__((unused)),

@@ -16,7 +16,6 @@ void handle_init_contract(void *parameters) {
 
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
     memset(context, 0, sizeof(*context));
-    context->valid = 1;
 
     // Determine a function to call
     size_t i;
@@ -41,33 +40,35 @@ void handle_init_contract(void *parameters) {
             context->next_param = TOKEN_SENT;
             break;
         case UNOSWAP:
+        case UNOSWAP_V5:
+        case CLIPPER_SWAP:
+        case UNOSWAP_WITH_PERMIT:
             context->next_param = TOKEN_SENT;
             break;
         case UNISWAP_V3_SWAP:
             context->next_param = AMOUNT_SENT;
             break;
         case UNISWAP_V3_SWAP_TO:
-            context->next_param = DST_RECEIVER;
-            break;
         case UNISWAP_V3_SWAP_TO_WITH_PERMIT:
-            context->next_param = DST_RECEIVER;
-            break;
-        case UNOSWAP_WITH_PERMIT:
-            context->next_param = TOKEN_SENT;
-            break;
-        case CLIPPER_SWAP:
-            context->next_param = TOKEN_SENT;
-            break;
+        case UNOSWAP_TO_WITH_PERMIT_V5:
         case CLIPPER_SWAP_TO_WITH_PERMIT:
             context->next_param = DST_RECEIVER;
             break;
         case FILL_ORDER_RFQ:
-            context->skip = 5;
-            context->next_param = AMOUNT_SENT;
-            break;
         case FILL_ORDER_RFQ_TO_WITH_PERMIT:
             context->skip = 5;
             context->next_param = AMOUNT_SENT;
+            break;
+        case SWAP_V5:
+        case CLIPPER_SWAP_V5:
+        case FILL_ORDER_RFQ_V5:
+        case FILL_ORDER_RFQ_TO_WITH_PERMIT_V5:
+            context->skip = 1;
+            context->next_param = TOKEN_SENT;
+            break;
+        case CLIPPER_SWAP_TO_WITH_PERMIT_V5:
+            context->skip = 1;
+            context->next_param = DST_RECEIVER;
             break;
         default:
             PRINTF("Missing selectorIndex\n");

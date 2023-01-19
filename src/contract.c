@@ -38,6 +38,35 @@ static const uint8_t ONE_INCH_FILL_ORDER_RFQ_TO_WITH_PERMIT_SELECTOR[SELECTOR_SI
                                                                                        0xa2,
                                                                                        0x7b};
 
+// swap 0x12aa3caf
+static const uint8_t ONE_INCH_SWAP_SELECTOR_V5[SELECTOR_SIZE] = {0x12, 0xaa, 0x3c, 0xaf};
+
+// unoswap 0x0502b1c5
+static const uint8_t ONE_INCH_UNOSWAP_SELECTOR_V5[SELECTOR_SIZE] = {0x05, 0x02, 0xb1, 0xc5};
+
+// unoswapToWithPermit 0x3c15fd91
+static const uint8_t ONE_INCH_UNOSWAP_TO_WITH_PERMIT_SELECTOR_V5[SELECTOR_SIZE] = {0x3c,
+                                                                                   0x15,
+                                                                                   0xfd,
+                                                                                   0x91};
+
+// clipperSwap 0x84bd6d29
+static const uint8_t ONE_INCH_CLIPPER_SWAP_SELECTOR_V5[SELECTOR_SIZE] = {0x84, 0xbd, 0x6d, 0x29};
+
+// clipperSwapWithPermit 0xc805a666
+static const uint8_t ONE_INCH_CLIPPER_SWAP_TO_WITH_PERMIT_SELECTOR_V5[SELECTOR_SIZE] = {0xc8,
+                                                                                        0x05,
+                                                                                        0xa6,
+                                                                                        0x66};
+
+// fillOrderRFQToWithPermit 0x70ccbd31
+static const uint8_t ONE_INCH_FILL_ORDER_RFQ_TO_WITH_PERMIT_SELECTOR_V5[SELECTOR_SIZE] = {0x70,
+                                                                                          0xcc,
+                                                                                          0xbd,
+                                                                                          0x31};
+// fillOrderRFQ 0x3eca9c0a
+static const uint8_t ONE_INCH_FILL_ORDER_RFQ__SELECTOR_V5[SELECTOR_SIZE] = {0x3e, 0xca, 0x9c, 0x0a};
+
 // Array of all the different 1inch selectors.
 const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS] = {
     ONE_INCH_SWAP_SELECTOR,
@@ -50,6 +79,13 @@ const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS] = {
     ONE_INCH_CLIPPER_SWAP_TO_WITH_PERMIT_SELECTOR,
     ONE_INCH_FILL_ORDER_RFQ_SELECTOR,
     ONE_INCH_FILL_ORDER_RFQ_TO_WITH_PERMIT_SELECTOR,
+    ONE_INCH_SWAP_SELECTOR_V5,
+    ONE_INCH_UNOSWAP_SELECTOR_V5,
+    ONE_INCH_UNOSWAP_TO_WITH_PERMIT_SELECTOR_V5,
+    ONE_INCH_CLIPPER_SWAP_SELECTOR_V5,
+    ONE_INCH_CLIPPER_SWAP_TO_WITH_PERMIT_SELECTOR_V5,
+    ONE_INCH_FILL_ORDER_RFQ__SELECTOR_V5,
+    ONE_INCH_FILL_ORDER_RFQ_TO_WITH_PERMIT_SELECTOR_V5,
 };
 
 // 1inch uses `0xeeeee` as a dummy address to represent ETH.
