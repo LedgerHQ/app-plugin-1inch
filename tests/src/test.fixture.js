@@ -25,9 +25,9 @@ const APP_PATH_NANOS = Resolve('elfs/ethereum_nanos.elf');
 const APP_PATH_NANOX = Resolve('elfs/ethereum_nanox.elf');
 const APP_PATH_NANOSP = Resolve('elfs/ethereum_nanosp.elf');
 
-const PLUGIN_LIB_NANOS = { '1inch': Resolve('elfs/1inch_nanos.elf') };
-const PLUGIN_LIB_NANOX = { '1inch': Resolve('elfs/1inch_nanox.elf') };
-const PLUGIN_LIB_NANOSP = { '1inch': Resolve('elfs/1inch_nanosp.elf') };
+const PLUGIN_LIB_NANOS = { '1inch': Resolve('elfs/plugin_nanos.elf') };
+const PLUGIN_LIB_NANOX = { '1inch': Resolve('elfs/plugin_nanox.elf') };
+const PLUGIN_LIB_NANOSP = { '1inch': Resolve('elfs/plugin_nanosp.elf') };
 
 const RANDOM_ADDRESS = "0xaaaabbbbccccddddeeeeffffgggghhhhiiiijjjj";
 
@@ -53,7 +53,7 @@ const TIMEOUT = 2000000;
 function txFromEtherscan(rawTx) {
     // Remove 0x prefix
     rawTx = rawTx.slice(2);
-  
+
     let txType = rawTx.slice(0, 2);
     if (txType == "02" || txType == "01") {
       // Remove "02" prefix
@@ -61,7 +61,7 @@ function txFromEtherscan(rawTx) {
     } else {
       txType = "";
     }
-  
+
     let decoded = RLP.decode("0x" + rawTx);
     if (txType != "") {
       decoded = decoded.slice(0, decoded.length - 3); // remove v, r, s
@@ -70,19 +70,19 @@ function txFromEtherscan(rawTx) {
       decoded[decoded.length - 2] = "0x"; // empty
       decoded[decoded.length - 3] = "0x01"; // chainID 1
     }
-  
+
     // Encode back the data, drop the '0x' prefix
     let encoded = RLP.encode(decoded).slice(2);
-  
+
     // Don't forget to prepend the txtype
     return txType + encoded;
 }
-  
+
 /**
  * Emulation of the device using zemu
  * @param {string} device name of the device to emulate (nanos, nanox)
  * @param {function} func
- * @param {boolean} signed the plugin is already signed 
+ * @param {boolean} signed the plugin is already signed
  * @returns {Promise}
  */
 function zemu(device, func, testNetwork, signed = false) {
@@ -91,7 +91,7 @@ function zemu(device, func, testNetwork, signed = false) {
       let eth_path;
       let plugin;
       let sim_options = simOptions;
-  
+
       if (device === "nanos") {
         eth_path = APP_PATH_NANOS;
         plugin = PLUGIN_LIB_NANOS;
@@ -105,14 +105,14 @@ function zemu(device, func, testNetwork, signed = false) {
         plugin = PLUGIN_LIB_NANOSP;
         sim_options.model = "nanosp";
       }
-  
+
       const sim = new Zemu(eth_path, plugin);
-  
+
       try {
         await sim.start(sim_options);
         const transport = await sim.getTransport();
         const eth = new Eth(transport);
-  
+
         if (!signed) {
           config = generate_plugin_config(testNetwork);
           eth.setLoadConfig({
@@ -126,7 +126,7 @@ function zemu(device, func, testNetwork, signed = false) {
       }
     };
 }
-  
+
 /**
  * Process the trasaction through the full test process in interaction with the simulator
  * @param {Eth} eth Device to test (nanos, nanox)
@@ -165,11 +165,11 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = "") 
       sim.getMainMenuSnapshot(),
       transactionUploadDelay
     );
-  
+
     await sim.navigateAndCompareSnapshots(".", label, [steps, 0]);
     await tx;
 }
-  
+
 /**
  * Function to execute test with the simulator
  * @param {Object} device Device including its name, its label, and the number of steps to process the use case
@@ -194,8 +194,8 @@ function processTest(device, contractName, testLabel, testDirSuffix, rawTxHex, s
       }, testNetwork, signed)
     );
 }
-  
-  
+
+
 function populateTransaction(contractAddr, inputData, chainId, value = "0.0") {
     // Get the generic transaction template
     let unsignedTx = genericTx;
