@@ -34,6 +34,11 @@ APPNAME = "1inch"
 #prepare hsm generation
 ifeq ($(TARGET_NAME), TARGET_NANOS)
 ICONNAME=icons/nanos_app_1inch.gif
+else ifeq ($(TARGET_NAME), TARGET_STAX)
+ICONNAME=icons/stax_app_1inch.gif
+DEFINES += ICONGLYPH=C_stax_1inch_64px
+DEFINES += ICONBITMAP=C_stax_1inch_64px_bitmap
+GLYPH_FILES += $(ICONNAME)
 else
 ICONNAME=icons/nanox_app_1inch.gif
 endif
