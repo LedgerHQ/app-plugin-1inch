@@ -64,10 +64,14 @@ void handle_query_ui_exception(unsigned int *args) {
 }
 
 void call_app_ethereum() {
-    unsigned int libcall_params[3];
+    char name[] = APPNAME;
+    unsigned int libcall_params[5];
+
     libcall_params[0] = (unsigned int) "Ethereum";
     libcall_params[1] = 0x100;
     libcall_params[2] = RUN_APPLICATION;
+    libcall_params[3] = (unsigned int) NULL;
+    libcall_params[4] = (unsigned int) &name[0];
     os_lib_call((unsigned int *) &libcall_params);
 }
 
