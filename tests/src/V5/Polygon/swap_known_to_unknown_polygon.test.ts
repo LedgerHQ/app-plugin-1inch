@@ -2,7 +2,7 @@ import { processTest, populateTransaction } from "../../test.fixture";
 
 const contractName = "AggregationRouterV5";
 
-const testLabel = "swapKnownToKnownV5"; // <= Name of the test
+const testLabel = "swapKnownToUnknownV5"; // <= Name of the test
 const testDirSuffix = "swap_known_to_unknown_v5"; // <= directory to compare device snapshots to
 const testNetwork = "polygon";
 const signedPlugin = false;
@@ -24,12 +24,12 @@ const devices = [
     {
         name: "nanox",
         label: "Nano X",
-        steps: 9, // <= Define the number of steps for this test case and this device
+        steps: 8, // <= Define the number of steps for this test case and this device
     },
     {
         name: "nanosp",
         label: "Nano S+",
-        steps: 9, // <= Define the number of steps for this test case and this device
+        steps: 8, // <= Define the number of steps for this test case and this device
     }
 ];
 
