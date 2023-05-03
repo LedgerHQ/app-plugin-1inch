@@ -53,6 +53,16 @@ void one_inch_plugin_call(int message, void *parameters) {
     }
 }
 
+void handle_query_ui_exception(unsigned int *args) {
+    switch (args[0]) {
+        case ETH_PLUGIN_QUERY_CONTRACT_UI:
+            ((ethQueryContractUI_t *) args[1])->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+        default:
+            break;
+    }
+}
+
 void call_app_ethereum() {
     unsigned int libcall_params[3];
     libcall_params[0] = (unsigned int) "Ethereum";
@@ -83,10 +93,22 @@ __attribute__((section(".boot"))) int main(int arg0) {
                 if (args[0] != ETH_PLUGIN_CHECK_PRESENCE) {
                     one_inch_plugin_call(args[0], (void *) args[1]);
                 }
-                os_lib_end();
             }
         }
+        CATCH_OTHER(e) {
+            switch (e) {
+                // These exceptions are only generated on handle_query_contract_ui()
+                case 0x6502:
+                case EXCEPTION_OVERFLOW:
+                    handle_query_ui_exception((unsigned int *) arg0);
+                    break;
+                default:
+                    break;
+            }
+            PRINTF("Exception 0x%x caught\n", e);
+        }
         FINALLY {
+            os_lib_end();
         }
     }
     END_TRY;

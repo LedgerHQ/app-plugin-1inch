@@ -4,17 +4,24 @@
 static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP:
+        case SWAP_V5:
         case UNOSWAP:
+        case UNOSWAP_V5:
         case UNISWAP_V3_SWAP:
         case UNISWAP_V3_SWAP_TO:
         case UNISWAP_V3_SWAP_TO_WITH_PERMIT:
+        case UNOSWAP_TO_WITH_PERMIT_V5:
         case UNOSWAP_WITH_PERMIT:
         case CLIPPER_SWAP:
+        case CLIPPER_SWAP_V5:
         case CLIPPER_SWAP_TO_WITH_PERMIT:
+        case CLIPPER_SWAP_TO_WITH_PERMIT_V5:
             strlcpy(msg->title, "Send", msg->titleLength);
             break;
         case FILL_ORDER_RFQ:
+        case FILL_ORDER_RFQ_V5:
         case FILL_ORDER_RFQ_TO_WITH_PERMIT:
+        case FILL_ORDER_RFQ_TO_WITH_PERMIT_V5:
             strlcpy(msg->title, "Making", msg->titleLength);
             break;
         default:
@@ -42,17 +49,24 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
 static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP:
+        case SWAP_V5:
         case UNOSWAP:
+        case UNOSWAP_V5:
         case UNISWAP_V3_SWAP:
         case UNISWAP_V3_SWAP_TO:
         case UNISWAP_V3_SWAP_TO_WITH_PERMIT:
+        case UNOSWAP_TO_WITH_PERMIT_V5:
         case UNOSWAP_WITH_PERMIT:
         case CLIPPER_SWAP:
+        case CLIPPER_SWAP_V5:
         case CLIPPER_SWAP_TO_WITH_PERMIT:
+        case CLIPPER_SWAP_TO_WITH_PERMIT_V5:
             strlcpy(msg->title, "Receive Min", msg->titleLength);
             break;
         case FILL_ORDER_RFQ:
+        case FILL_ORDER_RFQ_V5:
         case FILL_ORDER_RFQ_TO_WITH_PERMIT:
+        case FILL_ORDER_RFQ_TO_WITH_PERMIT_V5:
             strlcpy(msg->title, "Taking", msg->titleLength);
             break;
         default:
