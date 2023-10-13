@@ -1,7 +1,6 @@
 #include "one_inch_plugin.h"
 
-void handle_finalize(void *parameters) {
-    ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
+void handle_finalize(ethPluginFinalize_t *msg) {
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
     msg->numScreens = 2;
     if (memcmp(context->beneficiary, NULL_ETH_ADDRESS, ADDRESS_LENGTH) != 0) {
