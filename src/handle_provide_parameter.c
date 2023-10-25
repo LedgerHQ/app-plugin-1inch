@@ -357,8 +357,7 @@ static void handle_fill_order_rfq_to_with_permit_v5(ethPluginProvideParameter_t 
     }
 }
 
-void handle_provide_parameter(void *parameters) {
-    ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
+void handle_provide_parameter(ethPluginProvideParameter_t *msg) {
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
     printf_hex_array("1inch plugin provide parameter: ", PARAMETER_LENGTH, msg->parameter);
 

@@ -1,7 +1,8 @@
+#include <stdbool.h>
 #include "one_inch_plugin.h"
 
 // Set UI for the "Send" screen.
-static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
+static bool set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP:
         case SWAP_V5:
@@ -26,8 +27,7 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
             break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
-            msg->result = ETH_PLUGIN_RESULT_ERROR;
-            return;
+            return false;
     }
 
     // set network ticker (ETH, BNB, etc) if needed
@@ -36,17 +36,20 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
     }
 
     // Convert to string.
-    amountToString(context->amount_sent,
-                   INT256_LENGTH,
-                   context->decimals_sent,
-                   context->ticker_sent,
-                   msg->msg,
-                   msg->msgLength);
+    if (!amountToString(context->amount_sent,
+                        INT256_LENGTH,
+                        context->decimals_sent,
+                        context->ticker_sent,
+                        msg->msg,
+                        msg->msgLength)) {
+        return false;
+    }
     PRINTF("AMOUNT SENT: %s\n", msg->msg);
+    return true;
 }
 
 // Set UI for "Receive" screen.
-static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
+static bool set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP:
         case SWAP_V5:
@@ -71,8 +74,7 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
             break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
-            msg->result = ETH_PLUGIN_RESULT_ERROR;
-            return;
+            return false;
     }
 
     // set network ticker (ETH, BNB, etc) if needed
@@ -81,40 +83,45 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
     }
 
     // Convert to string.
-    amountToString(context->amount_received,
-                   INT256_LENGTH,
-                   context->decimals_received,
-                   context->ticker_received,
-                   msg->msg,
-                   msg->msgLength);
+    if (!amountToString(context->amount_received,
+                        INT256_LENGTH,
+                        context->decimals_received,
+                        context->ticker_received,
+                        msg->msg,
+                        msg->msgLength)) {
+        return false;
+    }
     PRINTF("AMOUNT RECEIVED: %s\n", msg->msg);
+    return true;
 }
 
 // Set UI for "Beneficiary" screen.
-static void set_beneficiary_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
+static bool set_beneficiary_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
     strlcpy(msg->title, "Beneficiary", msg->titleLength);
 
     msg->msg[0] = '0';
     msg->msg[1] = 'x';
 
-    getEthAddressStringFromBinary((uint8_t *) context->beneficiary,
-                                  msg->msg + 2,
-                                  msg->pluginSharedRW->sha3,
-                                  0);
+    return getEthAddressStringFromBinary((uint8_t *) context->beneficiary,
+                                         msg->msg + 2,
+                                         msg->pluginSharedRW->sha3,
+                                         0);
 }
 
 // Set UI for "Partial fill" screen.
-static void set_partial_fill_ui(ethQueryContractUI_t *msg,
+static bool set_partial_fill_ui(ethQueryContractUI_t *msg,
                                 one_inch_parameters_t *context __attribute__((unused))) {
     strlcpy(msg->title, "Partial fill", msg->titleLength);
     strlcpy(msg->msg, "Enabled", msg->msgLength);
+    return true;
 }
 
 // Set UI for "Warning" screen.
-static void set_warning_ui(ethQueryContractUI_t *msg,
+static bool set_warning_ui(ethQueryContractUI_t *msg,
                            const one_inch_parameters_t *context __attribute__((unused))) {
     strlcpy(msg->title, "WARNING", msg->titleLength);
     strlcpy(msg->msg, "Unknown token", msg->msgLength);
+    return true;
 }
 
 // Helper function that returns the enum corresponding to the screen that should be displayed.
@@ -185,33 +192,31 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
     return ERROR;
 }
 
-void handle_query_contract_ui(void *parameters) {
-    ethQueryContractUI_t *msg = (ethQueryContractUI_t *) parameters;
+void handle_query_contract_ui(ethQueryContractUI_t *msg) {
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
+    bool ret = false;
+
     memset(msg->title, 0, msg->titleLength);
     memset(msg->msg, 0, msg->msgLength);
-    msg->result = ETH_PLUGIN_RESULT_OK;
-
     screens_t screen = get_screen(msg, context);
     switch (screen) {
         case SEND_SCREEN:
-            set_send_ui(msg, context);
+            ret = set_send_ui(msg, context);
             break;
         case RECEIVE_SCREEN:
-            set_receive_ui(msg, context);
+            ret = set_receive_ui(msg, context);
             break;
         case BENEFICIARY_SCREEN:
-            set_beneficiary_ui(msg, context);
+            ret = set_beneficiary_ui(msg, context);
             break;
         case PARTIAL_FILL_SCREEN:
-            set_partial_fill_ui(msg, context);
+            ret = set_partial_fill_ui(msg, context);
             break;
         case WARN_SCREEN:
-            set_warning_ui(msg, context);
+            ret = set_warning_ui(msg, context);
             break;
         default:
             PRINTF("Received an invalid screenIndex\n");
-            msg->result = ETH_PLUGIN_RESULT_ERROR;
-            return;
     }
+    msg->result = ret ? ETH_PLUGIN_RESULT_OK : ETH_PLUGIN_RESULT_ERROR;
 }
