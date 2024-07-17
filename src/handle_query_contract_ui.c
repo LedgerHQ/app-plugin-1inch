@@ -143,6 +143,7 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
             } else if (token_received_found) {
                 return WARN_SCREEN;
             }
+            break;
         case 1:
             if (both_tokens_found) {
                 return RECEIVE_SCREEN;
@@ -153,6 +154,7 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
             } else if (token_received_found) {
                 return SEND_SCREEN;
             }
+            break;
         case 2:
             if (both_tokens_found) {
                 return BENEFICIARY_SCREEN;
@@ -161,6 +163,7 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
             } else {
                 return RECEIVE_SCREEN;
             }
+            break;
         case 3:
             if (both_tokens_found) {
                 return PARTIAL_FILL_SCREEN;
@@ -169,6 +172,7 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
             } else {
                 return BENEFICIARY_SCREEN;
             }
+            break;
         case 4:
             if (both_tokens_found) {
                 return ERROR;
@@ -177,12 +181,14 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
             } else {
                 return PARTIAL_FILL_SCREEN;
             }
+            break;
         case 5:
             if (both_tokens_not_found) {
                 return PARTIAL_FILL_SCREEN;
             } else {
                 return ERROR;
             }
+            break;
         default:
             return ERROR;
     }
