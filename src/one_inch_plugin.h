@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string.h>
-#include "eth_internals.h"
 #include "eth_plugin_interface.h"
 
 #define PARAMETER_LENGTH 32
