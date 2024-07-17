@@ -340,6 +340,7 @@ static void handle_fill_order_rfq_to_with_permit_v5(ethPluginProvideParameter_t 
             handle_beneficiary(msg, context);
             context->skip += 1;
             context->next_param = AMOUNT_SENT;
+            break;
         case AMOUNT_SENT:  // makingAmount
             handle_amount_sent(msg, context);
             context->next_param = AMOUNT_RECEIVED;
