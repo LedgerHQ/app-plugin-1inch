@@ -61,109 +61,21 @@ jobs:
           name: scan-build
           path: scan-build
 
-  job_coverity_scan:
-    name: Coverity Scan
-    runs-on: ubuntu-latest
+  build_plugin:
+    name: Build plugin using the reusable workflow
+    uses: LedgerHQ/ledger-app-workflows/.github/workflows/reusable_build.yml@v1
+    with:
+      upload_app_binaries_artifact: plugin_binaries
+      flags: "DEBUG=1"
 
-    container:
-      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-scanner:latest
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: recursive
-
-      - name: Build with cov-build
-        run: |
-          git config --global --add safe.directory /__w/app-plugin-1inch/app-plugin-1inch
-          cov-build --dir cov-int make default
-
-      - name: Submit the result to Coverity Scan
-        run: |
-          tar czvf cov-int.tar.gz cov-int
-          curl \
-            --form token=$TOKEN \
-            --form email=$EMAIL \
-            --form file=@cov-int.tar.gz \
-            --form version=master \
-            --form description="Plugin" \
-            https://scan.coverity.com/builds?project=app-plugin-1inch
-        env:
-          EMAIL: ${{ secrets.COVERITY_SCAN_EMAIL }}
-          TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
-
-  job_build_debug_plugin:
-    name: Build debug plugin
-    strategy:
-      matrix:
-        include:
-          - sdk: "$NANOS_SDK"
-            name: "nanos"
-          - sdk: "$NANOX_SDK"
-            name: "nanox"
-          - sdk: "$NANOSP_SDK"
-            name: "nanosp"
-
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder-lite:latest
-
-    steps:
-      - name: Clone
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
-
-      - name: Build
-        run: |
-          make DEBUG=1 BOLOS_SDK=${{ matrix.sdk }} -j
-
-      - name: Rename binary
-        run: |
-          mv bin/app.elf plugin_${{ matrix.name }}.elf
-
-      - name: Upload binary
-        uses: actions/upload-artifact@v3
-        with:
-          name: binaries
-          path: plugin_${{ matrix.name }}.elf
-
-  job_build_debug_app:
-    name: Build debug Ethereum app
-    strategy:
-      matrix:
-        include:
-          - sdk: "$NANOS_SDK"
-            name: "nanos"
-          - sdk: "$NANOX_SDK"
-            name: "nanox"
-          - sdk: "$NANOSP_SDK"
-            name: "nanosp"
-
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder-lite:latest
-
-    steps:
-      - name: Checkout app-ethereum
-        uses: actions/checkout@v3
-        with:
-          repository: LedgerHQ/app-ethereum
-          ref: ${{ ((github.base_ref || github.ref_name) == 'main' && 'master') || (github.base_ref || github.ref_name) }}
-
-      - name: Build
-        run: |
-          make DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=${{ matrix.sdk }} -j
-
-      - name: Rename binary
-        run: |
-          mv bin/app.elf ethereum_${{ matrix.name }}.elf
-
-      - name: Upload binary
-        uses: actions/upload-artifact@v3
-        with:
-          name: binaries
-          path: ethereum_${{ matrix.name }}.elf
+  build_develop_ethereum_app:
+    name: Build Ethereum app using the reusable workflow
+    uses: LedgerHQ/ledger-app-workflows/.github/workflows/reusable_build.yml@v1
+    with:
+      app_repository: LedgerHQ/app-ethereum
+      app_branch_name: develop
+      flags: "DEBUG=1 CAL_TEST_KEY=1"
+      upload_app_binaries_artifact: ethereum_build_develop
 
   jobs-e2e-tests:
     name: E2E Tests
