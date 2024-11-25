@@ -4,7 +4,7 @@ const contractName = "AggregationRouterV5";
 
 const testLabel = "unoswapV5"; // <= Name of the test
 const testDirSuffix = "unoswap_v5"; // <= directory to compare device snapshots to
-const testNetwork = "zksync";
+const testNetwork = "zksync_era";
 const signedPlugin = false;
 
 const contractAddr = "0x6e2b76966cbd9cf4cc2fa0d76d24d5241e0abc2f";
