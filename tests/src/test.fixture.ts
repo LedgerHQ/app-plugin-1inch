@@ -26,10 +26,14 @@ const Resolve = require('path').resolve;
 const APP_PATH_NANOS = Resolve('elfs/ethereum_nanos.elf');
 const APP_PATH_NANOX = Resolve('elfs/ethereum_nanox.elf');
 const APP_PATH_NANOSP = Resolve('elfs/ethereum_nanosp.elf');
+const APP_PATH_STAX = Resolve('elfs/ethereum_stax.elf');
+const APP_PATH_FLEX = Resolve('elfs/ethereum_flex.elf');
 
 const PLUGIN_LIB_NANOS = { '1inch': Resolve('elfs/plugin_nanos.elf') };
 const PLUGIN_LIB_NANOX = { '1inch': Resolve('elfs/plugin_nanox.elf') };
 const PLUGIN_LIB_NANOSP = { '1inch': Resolve('elfs/plugin_nanosp.elf') };
+const PLUGIN_LIB_STAX = { '1inch': Resolve('elfs/plugin_stax.elf') };
+const PLUGIN_LIB_FLEX = { '1inch': Resolve('elfs/plugin_flex.elf') };
 
 const RANDOM_ADDRESS = "0xaaaabbbbccccddddeeeeffffgggghhhhiiiijjjj";
 
@@ -101,15 +105,23 @@ function zemu(device, func, testNetwork, signed = false) {
       const models: model[] = [
         {dev:{ name : 'nanos', prefix: 'S' , path: APP_PATH_NANOS}, plugin: PLUGIN_LIB_NANOS},
         {dev:{ name : 'nanox', prefix: 'X' , path: APP_PATH_NANOX}, plugin: PLUGIN_LIB_NANOX},
-        {dev:{ name : 'nanosp', prefix: 'SP' , path: APP_PATH_NANOSP}, plugin: PLUGIN_LIB_NANOSP}
+        {dev:{ name : 'nanosp', prefix: 'SP' , path: APP_PATH_NANOSP}, plugin: PLUGIN_LIB_NANOSP},
+        {dev:{ name : 'stax', prefix: 'ST' , path: APP_PATH_STAX}, plugin: PLUGIN_LIB_STAX},
+        {dev:{ name : 'flex', prefix: 'FL' , path: APP_PATH_FLEX}, plugin: PLUGIN_LIB_FLEX}
     ]
 
       if (device === "nanos") {
         current_model = models[0]
       } else if (device === "nanox") {
         current_model = models[1]
-      }else {
+      } else if (device === "nanosp") {
         current_model = models[2]
+      } else if (device === "stax") {
+        current_model = models[3];
+        simOptions.startText = "Ethereum"
+      } else {
+        current_model = models[4],
+        simOptions.startText = "Ethereum"
       }
 
       const sim = new Zemu(current_model.dev.path, current_model.plugin);
@@ -172,7 +184,11 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = "") 
       transactionUploadDelay
     );
 
-    await sim.navigateAndCompareSnapshots(".", label, [steps, 0]);
+    if (sim.startOptions.model === "stax" || sim.startOptions.model === "flex") {
+      await sim.compareSnapshotsAndApprove(".", label)
+    } else {
+      await sim.navigateAndCompareSnapshots(".", label, [steps, 0]);
+    }
     await tx;
 }
 
