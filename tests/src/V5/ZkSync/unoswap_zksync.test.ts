@@ -7,7 +7,7 @@ const testDirSuffix = "unoswap_v5"; // <= directory to compare device snapshots 
 const testNetwork = "zksync";
 const signedPlugin = false;
 
-const contractAddr = "0x1111111254eeb25477b68fb85ed929f73a960582";
+const contractAddr = "0x6e2b76966cbd9cf4cc2fa0d76d24d5241e0abc2f";
 const chainID = 324;
 
 // From : https://era.zksync.network/tx/0xc36f16cae415ff4d8a41ec64330304461f662cd48c812e04e95001b23c7b0c01

@@ -7,7 +7,7 @@ const testDirSuffix = "swap_v5"; // <= directory to compare device snapshots to
 const testNetwork = "zksync";
 const signedPlugin = false;
 
-const contractAddr = "0x1111111254eeb25477b68fb85ed929f73a960582";
+const contractAddr = "0x6e2b76966cbd9cf4cc2fa0d76d24d5241e0abc2f";
 const chainID = 324;
 
 // From : https://era.zksync.network/tx/0x37f514a9146323ac49e55ac206f268e3cac23d9c24431d26cb8963a25c695dfb

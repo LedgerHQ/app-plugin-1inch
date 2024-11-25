@@ -5,11 +5,6 @@
                 "internalType": "address",
                 "name": "weth",
                 "type": "address"
-            },
-            {
-                "internalType": "contract IClipperExchangeInterface",
-                "name": "_clipperExchange",
-                "type": "address"
             }
         ],
         "stateMutability": "nonpayable",
@@ -89,123 +84,6 @@
         ],
         "name": "cancelOrderRFQ",
         "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "contract IERC20",
-                "name": "srcToken",
-                "type": "address"
-            },
-            {
-                "internalType": "contract IERC20",
-                "name": "dstToken",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "minReturn",
-                "type": "uint256"
-            }
-        ],
-        "name": "clipperSwap",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "returnAmount",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address payable",
-                "name": "recipient",
-                "type": "address"
-            },
-            {
-                "internalType": "contract IERC20",
-                "name": "srcToken",
-                "type": "address"
-            },
-            {
-                "internalType": "contract IERC20",
-                "name": "dstToken",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "minReturn",
-                "type": "uint256"
-            }
-        ],
-        "name": "clipperSwapTo",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "returnAmount",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address payable",
-                "name": "recipient",
-                "type": "address"
-            },
-            {
-                "internalType": "contract IERC20",
-                "name": "srcToken",
-                "type": "address"
-            },
-            {
-                "internalType": "contract IERC20",
-                "name": "dstToken",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "minReturn",
-                "type": "uint256"
-            },
-            {
-                "internalType": "bytes",
-                "name": "permit",
-                "type": "bytes"
-            }
-        ],
-        "name": "clipperSwapToWithPermit",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "returnAmount",
-                "type": "uint256"
-            }
-        ],
         "stateMutability": "nonpayable",
         "type": "function"
     },
