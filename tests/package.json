@@ -12,7 +12,7 @@
     "@ledgerhq/hw-app-eth": "^6.27.1",
     "@ledgerhq/hw-transport-http": "^6.27.1",
     "@ledgerhq/logs": "^6.2.0",
-    "@zondax/zemu": "0.51.0"
+    "@blooo/zemu": "0.52.3"
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",
