@@ -27,3 +27,5 @@ tests/snapshots-tmp
 .devcontainer
 .vscode
 node_modules
+
+.DS_Store
