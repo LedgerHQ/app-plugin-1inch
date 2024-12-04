@@ -44,7 +44,7 @@ cd -
 cp "${APP_ETHEREUM}/bin/app.elf" "tests/elfs/ethereum_nanox.elf"
 
 
-echo "*Building elfs for Nano X..."
+echo "*Building elfs for Nano S+..."
 export BOLOS_SDK="$NANOSP_SDK"
 
 echo "**Building app-1inch for Nano S+..."
@@ -58,5 +58,36 @@ make clean BOLOS_SDK=$NANOSP_SDK
 make -j DEBUG=1 BOLOS_SDK=$NANOSP_SDK CHAIN=ethereum BYPASS_SIGNATURES=1
 cd -
 cp "${APP_ETHEREUM}/bin/app.elf" "tests/elfs/ethereum_nanosp.elf"
+
+echo "*Building elfs for Flex..."
+export BOLOS_SDK="$FLEX_SDK"
+
+echo "**Building app-1inch for Flex..."
+make clean
+make -j DEBUG=1
+cp bin/app.elf "tests/elfs/plugin_flex.elf"
+
+echo "**Building app-ethereum for Flex..."
+cd $APP_ETHEREUM
+make clean BOLOS_SDK=$FLEX_SDK
+make -j DEBUG=1 BOLOS_SDK=$FLEX_SDK CHAIN=ethereum BYPASS_SIGNATURES=1
+cd -
+cp "${APP_ETHEREUM}/bin/app.elf" "tests/elfs/ethereum_flex.elf"
+
+
+echo "*Building elfs for Stax..."
+export BOLOS_SDK="$STAX_SDK"
+
+echo "**Building app-1inch for Stax..."
+make clean
+make -j DEBUG=1
+cp bin/app.elf "tests/elfs/plugin_stax.elf"
+
+echo "**Building app-ethereum for Stax..."
+cd $APP_ETHEREUM
+make clean BOLOS_SDK=$STAX_SDK
+make -j DEBUG=1 BOLOS_SDK=$STAX_SDK CHAIN=ethereum BYPASS_SIGNATURES=1
+cd -
+cp "${APP_ETHEREUM}/bin/app.elf" "tests/elfs/ethereum_stax.elf"
 
 echo "done"

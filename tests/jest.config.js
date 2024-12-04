@@ -3,5 +3,7 @@ module.exports = {
     testEnvironment: "node",
     preset: 'ts-jest',
     bail: false,
-    transformIgnorePatterns: ['^.+\\.js$'],
-};
+    maxWorkers: 1,
+    transformIgnorePatterns: ['^.+\\.js$']
+  };
+  
