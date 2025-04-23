@@ -6,6 +6,7 @@ debug/
 dep/
 obj/
 tests/elfs/
+build/
 
 # Editors
 .idea/
@@ -26,3 +27,5 @@ tests/snapshots-tmp
 .devcontainer
 .vscode
 node_modules
+
+.DS_Store

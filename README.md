@@ -30,12 +30,22 @@ Smart contracts covered by this plugin are:
 
 | Network | Version | Smart Contract |
 | ---       | --- | --- |
+| Arbitrum  | V3  | `0x11111112542D85B3EF69AE05771c2dCCff4fAa26`|
+| Arbitrum  | V4  | `0x1111111254fb6c44bAC0beD2854e76F90643097d`|
+| Arbitrum  | V5  | `0x1111111254eeb25477b68fb85ed929f73a960582`|
+| Base      | V5  | `0x1111111254eeb25477b68fb85ed929f73a960582`|
 | Ethereum  | V3  | `0x11111112542D85B3EF69AE05771c2dCCff4fAa26`|
 | Ethereum  | V4  | `0x1111111254fb6c44bAC0beD2854e76F90643097d`|
 | Ethereum  | V5  | `0x1111111254eeb25477b68fb85ed929f73a960582`|
+| Fantom    | V4  | `0x1111111254fb6c44bAC0beD2854e76F90643097d`|
+| Fantom    | V5  | `0x1111111254eeb25477b68fb85ed929f73a960582`|
+| Optimism  | V3  | `0x11111112542D85B3EF69AE05771c2dCCff4fAa26`|
+| Optimism  | V4  | `0x1111111254fb6c44bAC0beD2854e76F90643097d`|
+| Optimism  | V5  | `0x1111111254eeb25477b68fb85ed929f73a960582`|
 | Polygon   | V3  | `0x11111112542D85B3EF69AE05771c2dCCff4fAa26`|
 | Polygon   | V4  | `0x1111111254fb6c44bAC0beD2854e76F90643097d`|
 | Polygon   | V5  | `0x1111111254eeb25477b68fb85ed929f73a960582`|
+| ZkSync    | V5  | `0x6e2b76966cbd9cf4cc2fa0d76d24d5241e0abc2f`|
 
 
 ## Functions implemented:

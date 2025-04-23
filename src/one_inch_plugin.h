@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string.h>
-#include "eth_internals.h"
 #include "eth_plugin_interface.h"
 
 #define PARAMETER_LENGTH 32
@@ -114,14 +113,6 @@ typedef struct one_inch_parameters_t {
 // Piece of code that will check that the above structure is not bigger than 5 * 32.
 // Do not remove this check.
 _Static_assert(sizeof(one_inch_parameters_t) <= 5 * 32, "Structure of parameters too big.");
-
-void handle_provide_parameter(void *parameters);
-void handle_query_contract_ui(void *parameters);
-void one_inch_plugin_call(int message, void *parameters);
-void handle_finalize(void *parameters);
-void handle_init_contract(void *parameters);
-void handle_provide_token(void *parameters);
-void handle_query_contract_id(void *parameters);
 
 static inline void sent_network_token(one_inch_parameters_t *context) {
     context->decimals_sent = WEI_TO_ETHER;

@@ -340,6 +340,7 @@ static void handle_fill_order_rfq_to_with_permit_v5(ethPluginProvideParameter_t 
             handle_beneficiary(msg, context);
             context->skip += 1;
             context->next_param = AMOUNT_SENT;
+            break;
         case AMOUNT_SENT:  // makingAmount
             handle_amount_sent(msg, context);
             context->next_param = AMOUNT_RECEIVED;
@@ -357,8 +358,7 @@ static void handle_fill_order_rfq_to_with_permit_v5(ethPluginProvideParameter_t 
     }
 }
 
-void handle_provide_parameter(void *parameters) {
-    ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
+void handle_provide_parameter(ethPluginProvideParameter_t *msg) {
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
     printf_hex_array("1inch plugin provide parameter: ", PARAMETER_LENGTH, msg->parameter);
 

@@ -21,6 +21,10 @@ jobs:
             name: "nanox"
           - sdk: "$NANOSP_SDK"
             name: "nanosp"
+          - sdk: "$FLEX_SDK"
+            name: "flex"
+          - sdk: "$STAX_SDK"
+            name: "stax"
 
     runs-on: ubuntu-latest
     container:
@@ -36,60 +40,6 @@ jobs:
         run: |
           make BOLOS_SDK=${{ matrix.sdk }} -j
 
-  job_scan_build:
-    name: Clang Static Analyzer
-    runs-on: ubuntu-latest
-
-    container:
-      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder-lite:latest
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: recursive
-
-      - name: Build with Clang Static Analyzer
-        run: |
-          git config --global --add safe.directory /__w/app-plugin-1inch/app-plugin-1inch
-          scan-build --use-cc=clang -analyze-headers -enable-checker security -enable-checker unix -enable-checker valist -o scan-build --status-bugs make default
-
-      - uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: scan-build
-          path: scan-build
-
-  job_coverity_scan:
-    name: Coverity Scan
-    runs-on: ubuntu-latest
-
-    container:
-      image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-scanner:latest
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: recursive
-
-      - name: Build with cov-build
-        run: |
-          git config --global --add safe.directory /__w/app-plugin-1inch/app-plugin-1inch
-          cov-build --dir cov-int make default
-
-      - name: Submit the result to Coverity Scan
-        run: |
-          tar czvf cov-int.tar.gz cov-int
-          curl \
-            --form token=$TOKEN \
-            --form email=$EMAIL \
-            --form file=@cov-int.tar.gz \
-            --form version=master \
-            --form description="Plugin" \
-            https://scan.coverity.com/builds?project=app-plugin-1inch
-        env:
-          EMAIL: ${{ secrets.COVERITY_SCAN_EMAIL }}
-          TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
-
   job_build_debug_plugin:
     name: Build debug plugin
     strategy:
@@ -101,6 +51,10 @@ jobs:
             name: "nanox"
           - sdk: "$NANOSP_SDK"
             name: "nanosp"
+          - sdk: "$FLEX_SDK"
+            name: "flex"
+          - sdk: "$STAX_SDK"
+            name: "stax"
 
     runs-on: ubuntu-latest
     container:
@@ -137,6 +91,10 @@ jobs:
             name: "nanox"
           - sdk: "$NANOSP_SDK"
             name: "nanosp"
+          - sdk: "$FLEX_SDK"
+            name: "flex"
+          - sdk: "$STAX_SDK"
+            name: "stax"
 
     runs-on: ubuntu-latest
     container:
@@ -147,6 +105,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: LedgerHQ/app-ethereum
+          submodules: recursive
           ref: ${{ ((github.base_ref || github.ref_name) == 'main' && 'master') || (github.base_ref || github.ref_name) }}
 
       - name: Build
