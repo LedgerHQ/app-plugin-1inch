@@ -1,4 +1,4 @@
-#include "one_inch_plugin.h"
+#include "plugin.h"
 
 // Store the amount sent in the form of a string, without any ticker or decimals. These will be
 // added when displaying.

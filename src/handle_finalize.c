@@ -1,4 +1,4 @@
-#include "one_inch_plugin.h"
+#include "plugin.h"
 
 void handle_finalize(ethPluginFinalize_t *msg) {
     one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
