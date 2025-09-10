@@ -1,4 +1,4 @@
-#include "one_inch_plugin.h"
+#include "plugin.h"
 
 // Need more information about the interface for plugins? Please read the README.md!
 
