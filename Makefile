@@ -20,6 +20,6 @@ APPNAME = "1inch"
 # Application version
 APPVERSION_M = 2
 APPVERSION_N = 2
-APPVERSION_P = 0
+APPVERSION_P = 2
 
 include ethereum-plugin-sdk/standard_plugin.mk
