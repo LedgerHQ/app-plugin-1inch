@@ -1,5 +1,5 @@
 #include <stdbool.h>
-#include "one_inch_plugin.h"
+#include "plugin.h"
 
 // Set UI for the "Send" screen.
 static bool set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {

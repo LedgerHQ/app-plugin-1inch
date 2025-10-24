@@ -1,4 +1,4 @@
-#include "one_inch_plugin.h"
+#include "plugin.h"
 
 // Called once to init.
 void handle_init_contract(ethPluginInitContract_t *msg) {
