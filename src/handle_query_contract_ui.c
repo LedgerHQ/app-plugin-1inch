@@ -142,6 +142,9 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                 return SEND_SCREEN;
             } else if (token_received_found) {
                 return WARN_SCREEN;
+            } else {
+                // Unreachable
+                break;
             }
             break;
         case 1:
@@ -153,6 +156,9 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                 return WARN_SCREEN;
             } else if (token_received_found) {
                 return SEND_SCREEN;
+            } else {
+                // Unreachable
+                break;
             }
             break;
         case 2:
